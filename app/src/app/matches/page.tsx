@@ -2,12 +2,14 @@
 
 import { useMatches } from "@/hooks/use-matches";
 import { useFanCard } from "@/hooks/use-fan-card";
+import { useLiveScores } from "@/hooks/use-live-scores";
 import { MatchCard } from "@/components/match-card";
 import { EmptyState } from "@/components/empty-state";
 
 export default function MatchesPage() {
   const { matches, predictions, refresh } = useMatches();
   const { fan, refresh: refreshFan } = useFanCard();
+  const liveScores = useLiveScores();
 
   const fixtures = (matches ?? []).filter((m) => !m.settled);
   const finished = (matches ?? []).filter((m) => m.settled).reverse();
@@ -54,6 +56,7 @@ export default function MatchesPage() {
                   match={m}
                   prediction={predictions.get(m.id)}
                   fan={fan}
+                  live={liveScores.get(`${m.home}-${m.away}`)}
                   onChanged={onChanged}
                 />
               ))}

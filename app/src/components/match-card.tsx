@@ -13,6 +13,7 @@ import {
 } from "@/lib/fanpulse";
 import { getTeam } from "@/lib/teams";
 import { kickoffLabel } from "@/lib/format";
+import type { LiveScore } from "@/hooks/use-live-scores";
 
 function Side({ code, align }: { code: string; align: "left" | "right" }) {
   const team = getTeam(code);
@@ -72,11 +73,13 @@ export function MatchCard({
   match,
   prediction,
   fan,
+  live,
   onChanged,
 }: {
   match: Match;
   prediction?: Prediction;
   fan: FanCard | null;
+  live?: LiveScore;
   onChanged?: () => void;
 }) {
   const { connection } = useConnection();
@@ -88,6 +91,7 @@ export function MatchCard({
 
   const upcoming = !match.settled && match.kickoffTs * 1000 > Date.now();
   const inPlay = !match.settled && !upcoming;
+  const liveNow = inPlay && live?.state === "in";
 
   async function run(build: () => ReturnType<typeof predictIx>) {
     if (!publicKey || busy) return;
@@ -119,7 +123,7 @@ export function MatchCard({
               <span className="absolute inset-0 rounded-full bg-pitch animate-pulse-ring" />
               <span className="relative h-1.5 w-1.5 rounded-full bg-pitch" />
             </span>
-            Awaiting result
+            {liveNow ? `Live · ${live.clock}` : live?.state === "post" ? "FT · confirming on-chain" : "Awaiting result"}
           </span>
         ) : (
           <span className="text-grass">{kickoffLabel(match.kickoffTs)}</span>
@@ -135,6 +139,12 @@ export function MatchCard({
                 {match.homeScore}
                 <span className="mx-1 text-grass">–</span>
                 {match.awayScore}
+              </>
+            ) : live && live.state !== "pre" ? (
+              <>
+                {live.homeScore}
+                <span className="mx-1 text-grass">–</span>
+                {live.awayScore}
               </>
             ) : (
               <span className="text-grass">·</span>
