@@ -1,4 +1,4 @@
-# FanPulse
+# 12th Man
 
 World Cup passion, recorded where it can't be deleted.
 

@@ -1,13 +1,13 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { PublicKey, Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { Fanpulse } from "../target/types/fanpulse";
+import { TwelfthMan } from "../target/types/twelfth_man";
 import { assert } from "chai";
 
-describe("fanpulse", () => {
+describe("twelfth man", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
-  const program = anchor.workspace.fanpulse as Program<Fanpulse>;
+  const program = anchor.workspace.twelfthMan as Program<TwelfthMan>;
   const admin = provider.wallet;
 
   const rival = Keypair.generate();

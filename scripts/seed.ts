@@ -3,13 +3,13 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
-import { Fanpulse } from "../target/types/fanpulse";
+import { TwelfthMan } from "../target/types/twelfth_man";
 import fixtures from "./fixtures.json";
 
 async function main() {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
-  const program = anchor.workspace.fanpulse as Program<Fanpulse>;
+  const program = anchor.workspace.twelfthMan as Program<TwelfthMan>;
 
   const configPda = PublicKey.findProgramAddressSync(
     [Buffer.from("config")],

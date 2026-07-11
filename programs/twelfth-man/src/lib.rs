@@ -7,7 +7,7 @@ pub const EXACT_SCORE_POINTS: u8 = 3;
 pub const OUTCOME_POINTS: u8 = 1;
 
 #[program]
-pub mod fanpulse {
+pub mod twelfth_man {
     use super::*;
 
     /// One-time setup; the signer becomes the admin who can create matches

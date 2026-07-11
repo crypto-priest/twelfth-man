@@ -9,7 +9,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
-import { Fanpulse } from "../target/types/fanpulse";
+import { TwelfthMan } from "../target/types/twelfth_man";
 
 const SCOREBOARD =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
@@ -41,7 +41,7 @@ async function fetchFinals(): Promise<Map<string, Final & { completed: boolean }
 }
 
 async function settleOpenPredictions(
-  program: Program<Fanpulse>,
+  program: Program<TwelfthMan>,
   matchId: number,
   matchPk: PublicKey
 ) {
@@ -77,7 +77,7 @@ async function settleOpenPredictions(
   console.log(`  ${open.length} prediction(s) processed`);
 }
 
-async function tick(program: Program<Fanpulse>) {
+async function tick(program: Program<TwelfthMan>) {
   const matches = await program.account.matchAccount.all();
   const unsettled = matches.filter((m) => !m.account.settled);
   if (unsettled.length === 0) {
@@ -123,7 +123,7 @@ async function tick(program: Program<Fanpulse>) {
 async function main() {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
-  const program = anchor.workspace.fanpulse as Program<Fanpulse>;
+  const program = anchor.workspace.twelfthMan as Program<TwelfthMan>;
   console.log("oracle up, watching the scoreboard");
 
   for (;;) {
