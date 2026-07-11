@@ -22,7 +22,7 @@ const pendingConfirm = new Map<string, Final>();
 async function fetchFinals(): Promise<Map<string, Final & { completed: boolean }>> {
   const res = await fetch(SCOREBOARD);
   if (!res.ok) throw new Error(`scoreboard ${res.status}`);
-  const data = await res.json();
+  const data = (await res.json()) as any;
   const out = new Map();
   for (const e of data.events ?? []) {
     const comp = e.competitions?.[0];
