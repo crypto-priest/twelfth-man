@@ -39,6 +39,7 @@ export const TEAMS: Team[] = [
   { code: "DEN", name: "Denmark", flag: "🇩🇰", primary: "#C60C30", secondary: "#FFFFFF" },
   { code: "POL", name: "Poland", flag: "🇵🇱", primary: "#FFFFFF", secondary: "#DC143C" },
   { code: "ITA", name: "Italy", flag: "🇮🇹", primary: "#0066B2", secondary: "#FFFFFF" },
+  { code: "NOR", name: "Norway", flag: "🇳🇴", primary: "#EF2B2D", secondary: "#002868" },
 ];
 
 const byCode = new Map(TEAMS.map((t) => [t.code, t]));

@@ -8,6 +8,9 @@ skip-lint = false
 [programs.localnet]
 fanpulse = "EwCR98M9we9XSNpNA7jnSh9HKXdQWtZPonLdJZ6yM6Kc"
 
+[programs.devnet]
+fanpulse = "EwCR98M9we9XSNpNA7jnSh9HKXdQWtZPonLdJZ6yM6Kc"
+
 [registry]
 url = "https://api.apr.dev"
 
