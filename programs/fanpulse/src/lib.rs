@@ -230,7 +230,7 @@ pub struct PostChant<'info> {
 pub struct CreateMatch<'info> {
     #[account(mut, seeds = [b"config"], bump = config.bump, has_one = admin)]
     pub config: Account<'info, Config>,
-    #[account(init, payer = admin, space = 8 + MatchAccount::INIT_SPACE, seeds = [b"match", &id.to_le_bytes()], bump)]
+    #[account(init, payer = admin, space = 8 + MatchAccount::INIT_SPACE, seeds = [b"match".as_ref(), &id.to_le_bytes()], bump)]
     pub match_account: Account<'info, MatchAccount>,
     #[account(mut)]
     pub admin: Signer<'info>,
@@ -241,14 +241,14 @@ pub struct CreateMatch<'info> {
 pub struct PostResult<'info> {
     #[account(seeds = [b"config"], bump = config.bump, has_one = admin)]
     pub config: Account<'info, Config>,
-    #[account(mut, seeds = [b"match", &match_account.id.to_le_bytes()], bump = match_account.bump)]
+    #[account(mut, seeds = [b"match".as_ref(), &match_account.id.to_le_bytes()], bump = match_account.bump)]
     pub match_account: Account<'info, MatchAccount>,
     pub admin: Signer<'info>,
 }
 
 #[derive(Accounts)]
 pub struct Predict<'info> {
-    #[account(seeds = [b"match", &match_account.id.to_le_bytes()], bump = match_account.bump)]
+    #[account(seeds = [b"match".as_ref(), &match_account.id.to_le_bytes()], bump = match_account.bump)]
     pub match_account: Account<'info, MatchAccount>,
     #[account(seeds = [b"fan", owner.key().as_ref()], bump = fan_card.bump, has_one = owner)]
     pub fan_card: Account<'info, FanCard>,
@@ -267,7 +267,7 @@ pub struct Predict<'info> {
 
 #[derive(Accounts)]
 pub struct SettlePrediction<'info> {
-    #[account(seeds = [b"match", &match_account.id.to_le_bytes()], bump = match_account.bump)]
+    #[account(seeds = [b"match".as_ref(), &match_account.id.to_le_bytes()], bump = match_account.bump)]
     pub match_account: Account<'info, MatchAccount>,
     #[account(
         mut,
