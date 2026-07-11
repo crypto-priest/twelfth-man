@@ -14,9 +14,9 @@ const display = Barlow_Condensed({
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "FanPulse — the pulse of World Cup passion, on-chain",
+  title: "FanPulse — where World Cup fans get loud",
   description:
-    "Register your fandom, post chants, lock predictions and put your fanbase on top of the on-chain leaderboard.",
+    "Get your Fan Card, cheer for your team, call the scores and push your country to the top of the loudest-fans leaderboard.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -26,9 +26,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="pitch-lines" />
         <Providers>
           <Nav />
-          <main className="mx-auto w-full max-w-6xl px-4 pb-24 pt-8 sm:px-6">
+          <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 sm:px-6">
             {children}
           </main>
+          <footer className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6">
+            <p className="border-t border-edge pt-6 text-center text-xs text-grass">
+              Every cheer and prediction is a real Solana transaction —
+              permanent, provable, yours.
+            </p>
+          </footer>
         </Providers>
       </body>
     </html>

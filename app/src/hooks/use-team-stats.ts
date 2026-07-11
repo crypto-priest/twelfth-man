@@ -14,7 +14,7 @@ export function rankTeams(stats: TeamStats[]): TeamStats[] {
   );
 }
 
-export function useTeamStats(intervalMs = 15000) {
+export function useTeamStats(intervalMs = 30000) {
   const { connection } = useConnection();
   const [stats, setStats] = useState<TeamStats[] | null>(null);
 

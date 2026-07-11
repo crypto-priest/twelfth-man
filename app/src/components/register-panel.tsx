@@ -24,7 +24,8 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
       );
       onRegistered?.();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Transaction failed");
+      setError("That didn't go through — give it another try.");
+      console.error(e);
     } finally {
       setBusy(false);
     }
@@ -32,11 +33,11 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
 
   return (
     <div className="panel p-6">
-      <h2 className="font-display text-3xl font-bold uppercase tracking-wide">
-        Pick your colors
+      <h2 className="font-display text-3xl font-bold tracking-wide">
+        Pick your team
       </h2>
       <p className="mt-1 text-sm text-grass">
-        One Fan Card per wallet, forever. Passion means commitment.
+        One Fan Card per fan, for the whole tournament. Choose with your heart.
       </p>
 
       <div className="mt-6 grid grid-cols-4 gap-2 sm:grid-cols-6 lg:grid-cols-8">
@@ -73,10 +74,10 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
           className="rounded-full bg-pitch px-8 py-3 font-semibold text-night transition hover:bg-[#33ff9f] disabled:cursor-not-allowed disabled:opacity-40"
         >
           {busy
-            ? "Minting…"
+            ? "Making your card…"
             : picked
-              ? `Mint ${getTeam(picked).name} Fan Card`
-              : "Pick a team"}
+              ? `Get my ${getTeam(picked).name} Fan Card`
+              : "Pick a team first"}
         </button>
         {picked && !busy && (
           <span className="text-sm text-grass">
@@ -84,7 +85,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
           </span>
         )}
       </div>
-      {error && <p className="mt-3 break-all text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
     </div>
   );
 }

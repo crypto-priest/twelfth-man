@@ -39,7 +39,8 @@ export function ComposeBox({
       setMatchId(0);
       onPosted?.();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Transaction failed");
+      setError("That didn't go through — give it another try.");
+      console.error(e);
     } finally {
       setBusy(false);
     }
@@ -68,10 +69,10 @@ export function ComposeBox({
             onChange={(e) => setMatchId(Number(e.target.value))}
             className="rounded-full border border-edge bg-night/60 px-3 py-1.5 text-sm text-grass outline-none focus:border-pitch/40"
           >
-            <option value={0}>General chant</option>
+            <option value={0}>Just cheering</option>
             {matches.map((m) => (
               <option key={m.id} value={m.id}>
-                Moment · {getTeam(m.home).code} v {getTeam(m.away).code}
+                For {getTeam(m.home).code} v {getTeam(m.away).code}
               </option>
             ))}
           </select>
@@ -91,7 +92,7 @@ export function ComposeBox({
           {busy ? "Posting…" : "Post chant"}
         </button>
       </div>
-      {error && <p className="mt-2 break-all text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-2 text-xs text-red-400">{error}</p>}
     </div>
   );
 }

@@ -7,15 +7,15 @@ import { TeamBadge } from "./team-badge";
 
 export function ChantCard({ chant }: { chant: FeedChant }) {
   const team = getTeam(chant.team);
-  const isMoment = chant.matchId > 0;
+  const isMatchDay = chant.matchId > 0;
 
   return (
     <article
       className={`panel relative overflow-hidden p-4 animate-slide-up ${
-        isMoment ? "border-transparent" : ""
+        isMatchDay ? "border-transparent" : ""
       }`}
       style={
-        isMoment
+        isMatchDay
           ? {
               backgroundImage: `linear-gradient(#0a1a12, #0a1a12), linear-gradient(120deg, ${team.primary}, ${team.secondary})`,
               backgroundOrigin: "border-box",
@@ -25,7 +25,7 @@ export function ChantCard({ chant }: { chant: FeedChant }) {
           : undefined
       }
     >
-      {isMoment && (
+      {isMatchDay && (
         <div
           className="pointer-events-none absolute inset-0 opacity-15"
           style={{
@@ -35,12 +35,12 @@ export function ChantCard({ chant }: { chant: FeedChant }) {
       )}
       <div className="relative flex items-center gap-2">
         <TeamBadge code={chant.team} />
-        {isMoment && (
+        {isMatchDay && (
           <span
             className="rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-widest"
             style={{ background: `${team.primary}26`, color: team.primary }}
           >
-            Moment · Match #{chant.matchId}
+            Match-day chant · #{chant.matchId}
           </span>
         )}
         {chant.live && (

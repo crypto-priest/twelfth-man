@@ -6,12 +6,13 @@ import { useFanCard } from "@/hooks/use-fan-card";
 import { getTeam } from "@/lib/teams";
 import { CountUp } from "@/components/count-up";
 import { EmptyState } from "@/components/empty-state";
+import { StartBanner } from "@/components/start-banner";
 
 const rankColors = ["text-yellow-400", "text-slate-300", "text-amber-600"];
 
 export default function LeaderboardPage() {
   const stats = useTeamStats();
-  const { fan } = useFanCard();
+  const { fan, loading, connected } = useFanCard();
   const prevRanks = useRef<Map<string, number>>(new Map());
 
   const movement = useMemo(() => {
@@ -30,15 +31,22 @@ export default function LeaderboardPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <header>
-        <h1 className="font-display text-5xl font-bold uppercase tracking-tight">
+        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
           Loudest fanbases
           <span className="text-pitch glow-text"> on the planet</span>
         </h1>
         <p className="mt-1 text-grass">
-          Ranked by chants, then prediction points, then headcount. Updated
-          straight from the chain.
+          Countries ranked by chants, then prediction points, then fan count.
+          Updates live all tournament.
         </p>
       </header>
+
+      <StartBanner
+        connected={connected}
+        fan={fan}
+        loading={loading}
+        action="get your country on this board"
+      />
 
       {stats === null ? (
         <div className="space-y-2">
@@ -50,7 +58,7 @@ export default function LeaderboardPage() {
         <EmptyState
           icon="🏆"
           title="Empty podium"
-          body="No fanbase has made a sound yet. Register, chant once, and your nation tops the world."
+          body="No fanbase has made a sound yet. Get your Fan Card, post one chant, and your country tops the world."
         />
       ) : (
         <div className="panel overflow-hidden">

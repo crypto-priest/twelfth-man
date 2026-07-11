@@ -1,14 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-
-const WalletButton = dynamic(
-  () =>
-    import("@solana/wallet-adapter-react-ui").then((m) => m.WalletMultiButton),
-  { ssr: false }
-);
+import { WalletButton } from "./wallet-button";
 
 const links = [
   { href: "/", label: "Home" },
@@ -16,6 +10,7 @@ const links = [
   { href: "/matches", label: "Matches" },
   { href: "/leaderboard", label: "Leaderboard" },
   { href: "/card", label: "My Card" },
+  { href: "/#how-it-works", label: "How it works" },
 ];
 
 export function Nav() {

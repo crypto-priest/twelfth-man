@@ -84,7 +84,7 @@ export function FanCardView({ fan }: { fan: FanCard }) {
               Fan<span className="text-pitch">Pulse</span>
             </span>
             <span className="text-[11px] uppercase tracking-widest text-grass">
-              World Cup 2026 · on-chain
+              World Cup 2026
             </span>
           </div>
         </div>
@@ -95,6 +95,6 @@ export function FanCardView({ fan }: { fan: FanCard }) {
 
 export function shareOnXUrl(fan: FanCard): string {
   const team = getTeam(fan.team);
-  const text = `My ${team.flag} ${team.name} Fan Card lives on Solana — ${fan.chantCount} chants, ${fan.points} pts on FanPulse. Loudest fanbase on the planet, prove me wrong. #FanPulse #WorldCup2026`;
+  const text = `My ${team.flag} ${team.name} Fan Card — ${fan.chantCount} chants, ${fan.points} pts on FanPulse. Loudest fanbase on the planet, prove me wrong. #FanPulse #WorldCup2026`;
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
 }

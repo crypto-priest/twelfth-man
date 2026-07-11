@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
   predictIx,
@@ -45,7 +44,7 @@ function Stepper({
 }) {
   return (
     <div className="flex flex-col items-center gap-1.5">
-      <span className="text-[11px] uppercase tracking-widest text-grass">{label}</span>
+      <span className="text-xs font-semibold text-chalk">{label}</span>
       <div className="flex items-center gap-2">
         <button
           onClick={() => onChange(Math.max(0, value - 1))}
@@ -101,7 +100,8 @@ export function MatchCard({
       await sendIx(connection, { publicKey, sendTransaction }, build());
       onChanged?.();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Transaction failed");
+      setError("That didn't go through — give it another try.");
+      console.error(e);
     } finally {
       setBusy(false);
     }
@@ -123,10 +123,14 @@ export function MatchCard({
               <span className="absolute inset-0 rounded-full bg-pitch animate-pulse-ring" />
               <span className="relative h-1.5 w-1.5 rounded-full bg-pitch" />
             </span>
-            {liveNow ? `Live · ${live.clock}` : live?.state === "post" ? "FT · confirming on-chain" : "Awaiting result"}
+            {liveNow
+              ? `Live · ${live.clock}`
+              : live?.state === "post"
+                ? "Full time — result on its way"
+                : "Waiting for the final score"}
           </span>
         ) : (
-          <span className="text-grass">{kickoffLabel(match.kickoffTs)}</span>
+          <span className="text-grass">Kicks off {kickoffLabel(match.kickoffTs)}</span>
         )}
       </div>
 
@@ -162,8 +166,8 @@ export function MatchCard({
         {prediction ? (
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <div>
-              <p className="text-[11px] uppercase tracking-widest text-grass">
-                Your call — locked{" "}
+              <p className="text-xs text-grass">
+                Your call, made{" "}
                 {new Date(prediction.predictedAt * 1000).toLocaleString(undefined, {
                   month: "short",
                   day: "numeric",
@@ -188,9 +192,9 @@ export function MatchCard({
                 }`}
               >
                 {prediction.points === 3
-                  ? "Exact score · +3 pts"
+                  ? "Nailed the exact score · +3 pts"
                   : prediction.points === 1
-                    ? "Right outcome · +1 pt"
+                    ? "Called the result · +1 pt"
                     : "Off the mark · 0 pts"}
               </span>
             ) : match.settled && fan ? (
@@ -201,47 +205,52 @@ export function MatchCard({
                 disabled={busy}
                 className="ml-auto rounded-full bg-pitch px-5 py-2 text-sm font-semibold text-night transition hover:bg-[#33ff9f] disabled:opacity-40"
               >
-                {busy ? "Claiming…" : "Claim points"}
+                {busy ? "Collecting…" : "Collect my points"}
               </button>
             ) : (
-              <span className="ml-auto text-xs uppercase tracking-widest text-grass">
-                {match.settled ? "" : "🔒 Immutable"}
+              <span className="ml-auto text-xs text-grass">
+                {match.settled ? "" : "🔒 Locked — can't be changed"}
               </span>
             )}
           </div>
         ) : upcoming ? (
           publicKey && fan ? (
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              <Stepper value={home} onChange={setHome} label={getTeam(match.home).code} />
-              <Stepper value={away} onChange={setAway} label={getTeam(match.away).code} />
-              <button
-                onClick={() => run(() => predictIx(publicKey, match.id, home, away))}
-                disabled={busy}
-                className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-[#33ff9f] disabled:opacity-40"
-              >
-                {busy ? "Locking…" : "Lock prediction"}
-              </button>
+            <div className="space-y-3">
+              <p className="text-center text-xs text-grass">
+                Your score prediction — nail the exact score: 3 pts · call the
+                right result: 1 pt
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-6">
+                <Stepper
+                  value={home}
+                  onChange={setHome}
+                  label={getTeam(match.home).name}
+                />
+                <Stepper
+                  value={away}
+                  onChange={setAway}
+                  label={getTeam(match.away).name}
+                />
+                <button
+                  onClick={() => run(() => predictIx(publicKey, match.id, home, away))}
+                  disabled={busy}
+                  className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-[#33ff9f] disabled:opacity-40"
+                >
+                  {busy ? "Locking it in…" : `Lock my ${home}–${away} call`}
+                </button>
+              </div>
             </div>
           ) : (
             <p className="text-center text-sm text-grass">
-              {publicKey ? (
-                <>
-                  <Link href="/card" className="text-pitch underline-offset-4 hover:underline">
-                    Mint your Fan Card
-                  </Link>{" "}
-                  to lock a prediction.
-                </>
-              ) : (
-                "Connect a wallet to call the score before kickoff."
-              )}
+              Score predictions are open until kickoff.
             </p>
           )
         ) : (
-          <p className="text-center text-xs uppercase tracking-widest text-grass">
+          <p className="text-center text-xs text-grass">
             Predictions closed at kickoff
           </p>
         )}
-        {error && <p className="mt-2 break-all text-xs text-red-400">{error}</p>}
+        {error && <p className="mt-2 text-center text-xs text-red-400">{error}</p>}
       </div>
     </article>
   );

@@ -1,21 +1,18 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { chantKey, useChants } from "@/hooks/use-chants";
 import { useFanCard } from "@/hooks/use-fan-card";
 import { useMatches } from "@/hooks/use-matches";
 import { getTeam } from "@/lib/teams";
 import { ChantCard } from "@/components/chant-card";
 import { ComposeBox } from "@/components/compose-box";
-import { ConnectPrompt } from "@/components/connect-prompt";
 import { EmptyState } from "@/components/empty-state";
+import { StartBanner } from "@/components/start-banner";
 
 export default function ChantsPage() {
-  const { connected } = useWallet();
   const chants = useChants();
-  const { fan, loading: fanLoading, refresh: refreshFan } = useFanCard();
+  const { fan, loading, connected, refresh: refreshFan } = useFanCard();
   const { matches } = useMatches(60000);
   const [filter, setFilter] = useState<string | null>(null);
 
@@ -31,38 +28,34 @@ export default function ChantsPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <header>
-        <h1 className="font-display text-5xl font-bold uppercase tracking-tight">
+        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
           The Chant Wall
         </h1>
         <p className="mt-1 text-grass">
-          Every chant lives on-chain. Tag a match to mint a Moment.
+          Shout for your team. Every chant is saved forever — nobody can edit
+          it, nobody can delete it.
         </p>
       </header>
 
-      {!connected ? (
-        <ConnectPrompt body="Connect your wallet to join the chorus." />
-      ) : fanLoading ? (
-        <div className="skeleton h-40" />
-      ) : fan ? (
-        <ComposeBox
-          fan={fan}
-          matches={matches?.filter((m) => !m.settled)}
-          onPosted={refreshFan}
-        />
-      ) : (
-        <EmptyState
-          icon="🪪"
-          title="No Fan Card yet"
-          body="You need colors before you can chant. Pick your team and mint your card."
-        >
-          <Link
-            href="/card"
-            className="mt-2 rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-[#33ff9f]"
-          >
-            Mint your Fan Card
-          </Link>
-        </EmptyState>
-      )}
+      <StartBanner
+        connected={connected}
+        fan={fan}
+        loading={loading}
+        action="add your voice to the wall"
+      />
+
+      {connected &&
+        (loading ? (
+          <div className="skeleton h-40" />
+        ) : (
+          fan && (
+            <ComposeBox
+              fan={fan}
+              matches={matches?.filter((m) => !m.settled)}
+              onPosted={refreshFan}
+            />
+          )
+        ))}
 
       {teams.length > 1 && (
         <div className="flex flex-wrap gap-2">
@@ -74,7 +67,7 @@ export default function ChantsPage() {
                 : "border-edge text-grass hover:text-chalk"
             }`}
           >
-            All fanbases
+            All teams
           </button>
           {teams.map((code) => {
             const team = getTeam(code);

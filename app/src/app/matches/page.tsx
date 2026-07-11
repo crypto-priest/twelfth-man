@@ -5,10 +5,12 @@ import { useFanCard } from "@/hooks/use-fan-card";
 import { useLiveScores } from "@/hooks/use-live-scores";
 import { MatchCard } from "@/components/match-card";
 import { EmptyState } from "@/components/empty-state";
+import { SectionTitle } from "@/components/section-title";
+import { StartBanner } from "@/components/start-banner";
 
 export default function MatchesPage() {
   const { matches, predictions, refresh } = useMatches();
-  const { fan, refresh: refreshFan } = useFanCard();
+  const { fan, loading, connected, refresh: refreshFan } = useFanCard();
   const liveScores = useLiveScores();
 
   const fixtures = (matches ?? []).filter((m) => !m.settled);
@@ -20,16 +22,23 @@ export default function MatchesPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-10">
+    <div className="mx-auto max-w-3xl space-y-8">
       <header>
-        <h1 className="font-display text-5xl font-bold uppercase tracking-tight">
+        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
           Matches
         </h1>
         <p className="mt-1 text-grass">
-          Call the score before kickoff. Exact score is 3 points, right outcome
-          is 1 — locked forever, brag forever.
+          Call the score before kickoff. Nail the exact score: 3 pts. Call the
+          right result: 1 pt.
         </p>
       </header>
+
+      <StartBanner
+        connected={connected}
+        fan={fan}
+        loading={loading}
+        action="call your scores"
+      />
 
       {matches === null ? (
         <div className="space-y-4">
@@ -40,16 +49,14 @@ export default function MatchesPage() {
       ) : matches.length === 0 ? (
         <EmptyState
           icon="🗓️"
-          title="No fixtures yet"
-          body="The schedule hasn't hit the chain. Check back before the group stage."
+          title="No matches yet"
+          body="The fixture list lands here soon. Check back before kickoff."
         />
       ) : (
         <>
           {fixtures.length > 0 && (
             <section className="space-y-4">
-              <h2 className="font-display text-2xl font-bold uppercase tracking-wide text-grass">
-                Fixtures
-              </h2>
+              <SectionTitle live>Up next — make your call</SectionTitle>
               {fixtures.map((m) => (
                 <MatchCard
                   key={m.id}
@@ -64,10 +71,8 @@ export default function MatchesPage() {
           )}
 
           {finished.length > 0 && (
-            <section className="space-y-4">
-              <h2 className="font-display text-2xl font-bold uppercase tracking-wide text-grass">
-                Full time
-              </h2>
+            <section className="space-y-4 border-t border-edge pt-8">
+              <SectionTitle>Finished — final scores</SectionTitle>
               {finished.map((m) => (
                 <MatchCard
                   key={m.id}

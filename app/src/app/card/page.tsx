@@ -1,29 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { useFanCard } from "@/hooks/use-fan-card";
 import { FanCardView, shareOnXUrl } from "@/components/fan-card-view";
 import { RegisterPanel } from "@/components/register-panel";
-import { ConnectPrompt } from "@/components/connect-prompt";
+import { EmptyState } from "@/components/empty-state";
+import { WalletButton } from "@/components/wallet-button";
 
 export default function CardPage() {
-  const { connected } = useWallet();
-  const { fan, loading, refresh } = useFanCard();
+  const { fan, loading, connected, refresh } = useFanCard();
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <header>
-        <h1 className="font-display text-5xl font-bold uppercase tracking-tight">
-          My Fan Card
+        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
+          Your Fan Card
         </h1>
         <p className="mt-1 text-grass">
-          Your allegiance, minted. One wallet, one team, no transfers.
+          One team. One card. Yours for the whole tournament.
         </p>
       </header>
 
       {!connected ? (
-        <ConnectPrompt body="Connect your wallet to mint or view your Fan Card." />
+        <EmptyState
+          icon="🎟️"
+          title="Step 1: connect your wallet"
+          body="That's your way into the stadium. Then pick your team and your card is ready in seconds."
+        >
+          <div className="mt-2">
+            <WalletButton />
+          </div>
+        </EmptyState>
       ) : loading ? (
         <div className="mx-auto max-w-sm">
           <div className="skeleton h-[480px] rounded-3xl" />
@@ -50,7 +57,7 @@ export default function CardPage() {
               href="/matches"
               className="rounded-full border border-edge px-6 py-2.5 text-sm font-semibold transition hover:border-pitch/50 hover:text-pitch"
             >
-              Lock a prediction
+              Call a score
             </Link>
           </div>
         </div>

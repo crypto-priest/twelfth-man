@@ -9,7 +9,7 @@ import {
   type Prediction,
 } from "@/lib/fanpulse";
 
-export function useMatches(intervalMs = 20000) {
+export function useMatches(intervalMs = 30000) {
   const { connection } = useConnection();
   const { publicKey } = useWallet();
   const [matches, setMatches] = useState<Match[] | null>(null);
