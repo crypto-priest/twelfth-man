@@ -1,0 +1,68 @@
+{
+  "generatedAtUtc": "2026-07-11T00:00:00Z",
+  "tournament": "FIFA World Cup 2026 (USA/Mexico/Canada) — knockout stage",
+  "notes": "Matches with undetermined pairings are omitted per data policy: Semifinal 2 (2026-07-15, Atlanta, winner NOR/ENG vs winner ARG/SUI), the third-place match (2026-07-18, Miami), and the final (2026-07-19, MetLife Stadium, New York/New Jersey) will be added once teams are confirmed.",
+  "fixtures": [
+    {
+      "id": 1,
+      "round": "Quarter-final",
+      "home": "FRA",
+      "away": "MAR",
+      "kickoffUtc": "2026-07-09T20:00:00Z",
+      "status": "played",
+      "homeScore": 2,
+      "awayScore": 0
+    },
+    {
+      "id": 2,
+      "round": "Quarter-final",
+      "home": "ESP",
+      "away": "BEL",
+      "kickoffUtc": "2026-07-10T19:00:00Z",
+      "status": "played",
+      "homeScore": 2,
+      "awayScore": 1
+    },
+    {
+      "id": 3,
+      "round": "Quarter-final",
+      "home": "NOR",
+      "away": "ENG",
+      "kickoffUtc": "2026-07-11T21:00:00Z",
+      "status": "upcoming",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 4,
+      "round": "Quarter-final",
+      "home": "ARG",
+      "away": "SUI",
+      "kickoffUtc": "2026-07-12T01:00:00Z",
+      "status": "upcoming",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 5,
+      "round": "Semi-final",
+      "home": "FRA",
+      "away": "ESP",
+      "kickoffUtc": "2026-07-14T19:00:00Z",
+      "status": "upcoming",
+      "homeScore": null,
+      "awayScore": null
+    }
+  ],
+  "sources": [
+    "https://www.espn.com/soccer/match/_/gameId/760510/morocco-france",
+    "https://www.espn.com/soccer/match/_/gameId/760511/belgium-spain",
+    "https://www.fifa.com/en/match-centre/match/17/285023/289289/400021536?gender=2&date=2026-07-09",
+    "https://www.aljazeera.com/sports/liveblog/2026/7/10/spain-vs-belgium-live-fifa-world-cup-2026-quarterfinal",
+    "https://www.olympics.com/en/news/fifa-world-cup-2026-spain-vs-belgium-quarter-final-score-lineups-live-updates",
+    "https://www.espn.com/soccer/story/_/id/49314271/norway-vs-england-fifa-world-cup-2026-tv-channel-how-watch-kickoff-live-stream-injury-predicted-lineups",
+    "https://www.nbcsports.com/soccer/news/when-are-the-2026-fifa-world-cup-semifinals-dates-confirmed-teams",
+    "https://www.olympics.com/en/news/fifa-world-cup-2026-bracket-semi-finals-full-schedule-live-updates",
+    "https://sports.yahoo.com/soccer/article/2026-world-cup-results-standings-and-schedule-live-scores-group-stage-updates-and-how-to-watch-050724193.html"
+  ]
+}
