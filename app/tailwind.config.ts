@@ -18,12 +18,28 @@ export default {
       },
       keyframes: {
         "slide-up": {
-          from: { opacity: "0", transform: "translateY(14px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
+          from: {
+            opacity: "0",
+            transform: "perspective(900px) translateY(18px) rotateX(7deg) scale(0.97)",
+          },
+          to: {
+            opacity: "1",
+            transform: "perspective(900px) translateY(0) rotateX(0) scale(1)",
+          },
         },
         "ticker-in": {
-          from: { opacity: "0", transform: "translateX(24px)" },
-          to: { opacity: "1", transform: "translateX(0)" },
+          from: {
+            opacity: "0",
+            transform: "perspective(700px) translateX(22px) rotateY(-8deg)",
+          },
+          to: {
+            opacity: "1",
+            transform: "perspective(700px) translateX(0) rotateY(0)",
+          },
+        },
+        "score-pop": {
+          from: { opacity: "0", transform: "scale(1.45)", filter: "blur(3px)" },
+          to: { opacity: "1", transform: "scale(1)", filter: "blur(0)" },
         },
         "pulse-ring": {
           "0%": { transform: "scale(1)", opacity: "0.8" },
@@ -35,8 +51,9 @@ export default {
         },
       },
       animation: {
-        "slide-up": "slide-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "slide-up": "slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both",
         "ticker-in": "ticker-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "score-pop": "score-pop 0.45s cubic-bezier(0.16, 1, 0.3, 1.1) both",
         "pulse-ring": "pulse-ring 1.6s cubic-bezier(0, 0.6, 0.4, 1) infinite",
         shimmer: "shimmer 1.8s linear infinite",
       },

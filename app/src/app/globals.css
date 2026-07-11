@@ -52,6 +52,33 @@ body {
   text-shadow: 0 0 24px rgba(0, 255, 135, 0.45);
 }
 
+/* broadcast-style live bug */
+.live-bug {
+  @apply inline-flex items-center gap-1.5 rounded bg-pitch px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-night;
+}
+.live-bug::before {
+  content: "";
+  @apply h-1.5 w-1.5 rounded-full bg-night;
+  animation: bug-blink 1.1s ease-in-out infinite;
+}
+@keyframes bug-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.lift {
+  @apply transition duration-200;
+}
+.lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 44px rgba(0, 255, 135, 0.09);
+}
+
 .skeleton {
   @apply rounded-lg;
   background: linear-gradient(

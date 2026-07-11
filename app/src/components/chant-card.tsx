@@ -11,7 +11,7 @@ export function ChantCard({ chant }: { chant: FeedChant }) {
 
   return (
     <article
-      className={`panel relative overflow-hidden p-4 animate-slide-up ${
+      className={`panel relative overflow-hidden p-4 ${
         isMatchDay ? "border-transparent" : ""
       }`}
       style={

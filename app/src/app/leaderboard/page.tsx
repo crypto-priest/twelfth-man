@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
+import { motion } from "framer-motion";
 import { useTeamStats } from "@/hooks/use-team-stats";
 import { useFanCard } from "@/hooks/use-fan-card";
 import { getTeam } from "@/lib/teams";
@@ -75,8 +76,10 @@ export default function LeaderboardPage() {
             const move = movement.get(t.code) ?? 0;
             const mine = fan?.team === t.code;
             return (
-              <div
+              <motion.div
                 key={t.code}
+                layout
+                transition={{ type: "spring", stiffness: 350, damping: 32 }}
                 className={`grid grid-cols-[3rem_1fr_4.5rem_4.5rem] items-center gap-2 border-b border-edge/60 px-4 py-3 transition-colors last:border-0 sm:grid-cols-[3.5rem_1fr_5rem_5rem_5rem] ${
                   mine ? "bg-pitch/[0.07]" : "hover:bg-white/[0.02]"
                 }`}
@@ -121,7 +124,7 @@ export default function LeaderboardPage() {
                   value={t.points}
                   className="text-right font-display text-xl font-bold tabular-nums text-pitch"
                 />
-              </div>
+              </motion.div>
             );
           })}
         </div>

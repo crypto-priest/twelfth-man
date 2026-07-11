@@ -104,7 +104,15 @@ export default function ChantsPage() {
             }
           />
         ) : (
-          visible.map((c) => <ChantCard key={chantKey(c)} chant={c} />)
+          visible.map((c, i) => (
+            <div
+              key={chantKey(c)}
+              className="animate-slide-up"
+              style={{ animationDelay: `${Math.min(i, 8) * 60}ms` }}
+            >
+              <ChantCard chant={c} />
+            </div>
+          ))
         )}
       </div>
     </div>

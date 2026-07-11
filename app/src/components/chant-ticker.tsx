@@ -10,13 +10,10 @@ export function ChantTicker() {
 
   return (
     <div className="panel flex h-full flex-col overflow-hidden">
-      <div className="flex items-center gap-2 border-b border-edge px-4 py-3">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inset-0 rounded-full bg-pitch animate-pulse-ring" />
-          <span className="relative h-2 w-2 rounded-full bg-pitch" />
-        </span>
+      <div className="flex items-center gap-2.5 border-b border-edge px-4 py-3">
+        <span className="live-bug">Live</span>
         <span className="text-xs font-bold uppercase tracking-[0.25em] text-grass">
-          Live from the stands
+          From the stands
         </span>
       </div>
 
@@ -27,12 +24,13 @@ export function ChantTicker() {
           ))
         ) : (
           <>
-            {chants.slice(0, 6).map((c) => {
+            {chants.slice(0, 6).map((c, i) => {
               const team = getTeam(c.team);
               return (
                 <div
                   key={chantKey(c)}
                   className="flex items-start gap-3 rounded-xl px-3 py-2 animate-ticker-in hover:bg-white/[0.03]"
+                  style={{ animationDelay: `${Math.min(i, 6) * 70}ms` }}
                 >
                   <span className="mt-0.5 text-xl">{team.flag}</span>
                   <div className="min-w-0 flex-1">

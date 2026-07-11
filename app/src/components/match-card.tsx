@@ -139,17 +139,23 @@ export function MatchCard({
         {match.settled || inPlay ? (
           <div className="font-display text-5xl font-bold tabular-nums tracking-tight">
             {match.settled ? (
-              <>
+              <span
+                key={`${match.homeScore}-${match.awayScore}`}
+                className="inline-block animate-score-pop"
+              >
                 {match.homeScore}
                 <span className="mx-1 text-grass">–</span>
                 {match.awayScore}
-              </>
+              </span>
             ) : live && live.state !== "pre" ? (
-              <>
+              <span
+                key={`${live.homeScore}-${live.awayScore}`}
+                className="inline-block animate-score-pop"
+              >
                 {live.homeScore}
                 <span className="mx-1 text-grass">–</span>
                 {live.awayScore}
-              </>
+              </span>
             ) : (
               <span className="text-grass">·</span>
             )}

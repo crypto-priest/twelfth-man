@@ -1,91 +1,149 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { fanSinceLabel, shortAddr } from "@/lib/format";
 import type { FanCard } from "@/lib/fanpulse";
 import { getTeam } from "@/lib/teams";
 import { CountUp } from "./count-up";
 
+const rest = { rx: 0, ry: 0, gx: 50, gy: 30 };
+
 export function FanCardView({ fan }: { fan: FanCard }) {
   const team = getTeam(fan.team);
+  const card = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState(rest);
+  const [held, setHeld] = useState(false);
+
+  function onMove(e: React.MouseEvent) {
+    const el = card.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    setTilt({
+      rx: (0.5 - py) * 16,
+      ry: (px - 0.5) * 16,
+      gx: px * 100,
+      gy: py * 100,
+    });
+  }
 
   return (
     <div
-      className="relative mx-auto w-full max-w-sm overflow-hidden rounded-3xl p-[1.5px]"
-      style={{
-        background: `linear-gradient(160deg, ${team.primary}, ${team.secondary})`,
-        boxShadow: `0 0 80px ${team.primary}40, 0 20px 60px rgba(0,0,0,0.5)`,
+      className="mx-auto w-full max-w-sm"
+      style={{ perspective: "1100px" }}
+      onMouseMove={onMove}
+      onMouseEnter={() => setHeld(true)}
+      onMouseLeave={() => {
+        setHeld(false);
+        setTilt(rest);
       }}
     >
-      <div className="relative overflow-hidden rounded-[calc(1.5rem-1.5px)] bg-night">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(160deg, ${team.primary}33 0%, transparent 45%, ${team.secondary}26 100%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            background:
-              "repeating-linear-gradient(115deg, #fff 0, #fff 1px, transparent 1px, transparent 22px)",
-          }}
-        />
+      <div
+        ref={card}
+        className="relative overflow-hidden rounded-3xl p-[1.5px]"
+        style={{
+          background: `linear-gradient(160deg, ${team.primary}, ${team.secondary})`,
+          boxShadow: held
+            ? `${-tilt.ry * 1.5}px ${tilt.rx * 1.5 + 24}px 60px rgba(0,0,0,0.55), 0 0 90px ${team.primary}55`
+            : `0 20px 60px rgba(0,0,0,0.5), 0 0 80px ${team.primary}40`,
+          transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) scale(${held ? 1.03 : 1})`,
+          transformStyle: "preserve-3d",
+          transition: held
+            ? "transform 80ms linear, box-shadow 80ms linear"
+            : "transform 600ms cubic-bezier(0.2, 0.9, 0.3, 1.15), box-shadow 600ms ease",
+        }}
+      >
+        <div className="relative overflow-hidden rounded-[calc(1.5rem-1.5px)] bg-night">
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(160deg, ${team.primary}33 0%, transparent 45%, ${team.secondary}26 100%)`,
+            }}
+          />
+          {/* foil sheen that shifts with the tilt */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `conic-gradient(from ${tilt.ry * 6 + 210}deg at 50% 40%, transparent 0deg, ${team.primary}22 80deg, #ffffff14 120deg, transparent 180deg, ${team.secondary}1e 280deg, transparent 360deg)`,
+              opacity: held ? 0.9 : 0.5,
+              transition: "opacity 300ms ease",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-[0.05]"
+            style={{
+              background:
+                "repeating-linear-gradient(115deg, #fff 0, #fff 1px, transparent 1px, transparent 22px)",
+            }}
+          />
+          {/* glare that follows the cursor */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background: `radial-gradient(420px 320px at ${tilt.gx}% ${tilt.gy}%, rgba(255,255,255,${held ? 0.14 : 0.05}), transparent 60%)`,
+              transition: held ? undefined : "background 600ms ease",
+            }}
+          />
 
-        <div className="relative p-7">
-          <div className="flex items-start justify-between">
-            <div>
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.25em]"
-                style={{ color: team.primary }}
-              >
-                Official Fan Card
-              </p>
-              <p className="mt-1 font-display text-4xl font-bold uppercase leading-none tracking-wide">
-                {team.name}
-              </p>
+          <div className="relative p-7" style={{ transform: "translateZ(30px)" }}>
+            <div className="flex items-start justify-between">
+              <div>
+                <p
+                  className="text-[11px] font-bold uppercase tracking-[0.25em]"
+                  style={{ color: team.primary }}
+                >
+                  Official Fan Card
+                </p>
+                <p className="mt-1 font-display text-4xl font-bold uppercase leading-none tracking-wide">
+                  {team.name}
+                </p>
+              </div>
+              <span className="text-5xl drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]">
+                {team.flag}
+              </span>
             </div>
-            <span className="text-5xl drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]">
-              {team.flag}
-            </span>
-          </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-[11px] uppercase tracking-widest text-grass">Chants</p>
-              <CountUp
-                value={fan.chantCount}
-                className="font-display text-4xl font-bold tabular-nums"
-              />
+            <div className="mt-10 grid grid-cols-2 gap-4">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <p className="text-[11px] uppercase tracking-widest text-grass">Chants</p>
+                <CountUp
+                  value={fan.chantCount}
+                  className="font-display text-4xl font-bold tabular-nums"
+                />
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <p className="text-[11px] uppercase tracking-widest text-grass">Points</p>
+                <CountUp
+                  value={fan.points}
+                  className="font-display text-4xl font-bold tabular-nums text-pitch"
+                />
+              </div>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-[11px] uppercase tracking-widest text-grass">Points</p>
-              <CountUp
-                value={fan.points}
-                className="font-display text-4xl font-bold tabular-nums text-pitch"
-              />
-            </div>
-          </div>
 
-          <div className="mt-8 flex items-end justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-widest text-grass">Fan since</p>
-              <p className="font-display text-lg font-semibold uppercase">
-                {fanSinceLabel(fan.fanSince)}
-              </p>
+            <div className="mt-8 flex items-end justify-between">
+              <div>
+                <p className="text-[11px] uppercase tracking-widest text-grass">
+                  Fan since
+                </p>
+                <p className="font-display text-lg font-semibold uppercase">
+                  {fanSinceLabel(fan.fanSince)}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-[11px] uppercase tracking-widest text-grass">Holder</p>
+                <p className="font-mono text-sm">{shortAddr(fan.owner.toBase58())}</p>
+              </div>
             </div>
-            <div className="text-right">
-              <p className="text-[11px] uppercase tracking-widest text-grass">Holder</p>
-              <p className="font-mono text-sm">{shortAddr(fan.owner.toBase58())}</p>
-            </div>
-          </div>
 
-          <div className="mt-7 flex items-center justify-between border-t border-white/10 pt-4">
-            <span className="font-display text-sm font-bold uppercase tracking-wider">
-              <span className="text-pitch">12</span>th Man
-            </span>
-            <span className="text-[11px] uppercase tracking-widest text-grass">
-              World Cup 2026
-            </span>
+            <div className="mt-7 flex items-center justify-between border-t border-white/10 pt-4">
+              <span className="font-display text-sm font-bold uppercase tracking-wider">
+                <span className="text-pitch">12</span>th Man
+              </span>
+              <span className="text-[11px] uppercase tracking-widest text-grass">
+                World Cup 2026
+              </span>
+            </div>
           </div>
         </div>
       </div>

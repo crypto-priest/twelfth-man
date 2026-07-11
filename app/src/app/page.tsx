@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useFanCard } from "@/hooks/use-fan-card";
 import { useMatches } from "@/hooks/use-matches";
 import { useTeamStats } from "@/hooks/use-team-stats";
@@ -15,11 +17,16 @@ import { RegisterPanel } from "@/components/register-panel";
 import { SectionTitle } from "@/components/section-title";
 import { WalletButton } from "@/components/wallet-button";
 
+const HeroScene = dynamic(() => import("@/components/hero-scene"), {
+  ssr: false,
+  loading: () => null,
+});
+
 const steps = [
   {
     icon: "🎟️",
     title: "Connect your wallet",
-    body: "One tap. That's your ticket into the stadium.",
+    body: "One tap. That's your ticket in.",
   },
   {
     icon: "🎽",
@@ -89,7 +96,7 @@ function PersonalStrip({ fan }: { fan: FanCard }) {
   return (
     <Link
       href="/card"
-      className="panel flex items-center gap-4 px-5 py-3.5 transition hover:border-pitch/40"
+      className="panel lift flex items-center gap-4 px-5 py-3.5 hover:border-pitch/40"
     >
       <span className="text-3xl">{team.flag}</span>
       <div className="min-w-0 flex-1">
@@ -113,6 +120,13 @@ export default function Home() {
   const { matches, predictions, refresh: refreshMatches } = useMatches();
   const stats = useTeamStats();
   const liveScores = useLiveScores();
+  const [fx, setFx] = useState(false);
+
+  useEffect(() => {
+    const wide = window.matchMedia("(min-width: 768px)").matches;
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setFx(wide && !calm);
+  }, []);
 
   const fixtures = (matches ?? []).filter((m) => !m.settled).slice(0, 3);
   const totalChants = stats?.reduce((n, t) => n + t.chantCount, 0) ?? 0;
@@ -187,31 +201,77 @@ export default function Home() {
     );
   }
 
-  // first visit: get them a fan card without leaving this page
+  // first visit: say what this is, then get them a fan card without leaving home
   return (
     <div className="space-y-12">
-      <section className="mx-auto max-w-2xl pt-4 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-pitch">
-          World Cup 2026
-        </p>
-        <h1 className="mt-4 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight sm:text-6xl">
-          Your team needs your voice.{" "}
-          <span className="text-pitch glow-text">Get loud.</span>
-        </h1>
-        <p className="mx-auto mt-4 max-w-lg text-grass">
-          Cheer for your country, call the scores before kickoff, and push your
-          fans to the top of the world table.
-        </p>
-        {!connected && (
-          <div className="mt-7 flex flex-col items-center gap-3">
-            <WalletButton />
-            <p className="text-xs text-grass">
-              Start here — connecting takes one tap.
-            </p>
+      <section className="relative">
+        {fx && (
+          <div className="pointer-events-none absolute -right-24 -top-16 hidden h-[480px] w-[560px] md:block">
+            <HeroScene />
           </div>
         )}
 
-        <div className="mt-8 flex justify-center gap-10">
+        <div className="relative max-w-xl pt-4">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-pitch">
+            World Cup 2026
+          </p>
+          <h1 className="mt-3 font-display text-6xl font-bold uppercase leading-none tracking-tight sm:text-7xl">
+            <span className="text-pitch glow-text">12</span>th Man
+          </h1>
+          <p className="mt-2 font-display text-xl font-semibold uppercase tracking-wide text-chalk">
+            Every team has eleven. You&apos;re the twelfth.
+          </p>
+          <p className="mt-4 text-grass">
+            Pick your World Cup team, cheer with fans worldwide, and call the
+            scores before kickoff — every cheer and call is saved forever, so
+            your bragging rights are provable.
+          </p>
+        </div>
+
+        <div className="relative mt-8 grid gap-3 sm:grid-cols-3">
+          {steps.map((s, i) => {
+            const done = (i === 0 && connected) || (i === 1 && connected && !!fan);
+            return (
+              <div key={s.title} className="panel lift flex items-start gap-3 p-4">
+                <span
+                  className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-display text-base font-bold ${
+                    done ? "bg-pitch text-night" : "bg-pitch/10 text-pitch"
+                  }`}
+                >
+                  {done ? "✓" : i + 1}
+                </span>
+                <div>
+                  <p className="text-sm font-semibold">
+                    {s.title} <span className="ml-1">{s.icon}</span>
+                  </p>
+                  <p className="mt-0.5 text-xs text-grass">{s.body}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="relative mt-7 flex flex-wrap items-center gap-4">
+          {!connected ? (
+            <>
+              <WalletButton />
+              <p className="text-sm text-grass">Free, takes one tap — start here.</p>
+            </>
+          ) : (
+            !loading &&
+            !fan && (
+              <p className="text-sm text-grass">
+                You&apos;re in. Now pick your team below 👇
+              </p>
+            )
+          )}
+        </div>
+      </section>
+
+      {connected && !loading && !fan && <RegisterPanel onRegistered={refresh} />}
+
+      <section id="how-it-works" className="scroll-mt-24">
+        <div className="flex gap-10">
           <div>
             <CountUp
               value={totalChants}
@@ -236,40 +296,9 @@ export default function Home() {
         </div>
       </section>
 
-      {connected && !loading && !fan && (
-        <section className="mx-auto max-w-3xl">
-          <RegisterPanel onRegistered={refresh} />
-        </section>
-      )}
-
-      <section id="how-it-works" className="mx-auto max-w-4xl scroll-mt-24">
-        <SectionTitle>How it works</SectionTitle>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          {steps.map((s, i) => {
-            const done = (i === 0 && connected) || (i === 1 && connected && !!fan);
-            return (
-              <div key={s.title} className="panel flex flex-col gap-3 p-5">
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`flex h-8 w-8 items-center justify-center rounded-full font-display text-lg font-bold ${
-                      done ? "bg-pitch text-night" : "bg-pitch/10 text-pitch"
-                    }`}
-                  >
-                    {done ? "✓" : i + 1}
-                  </span>
-                  <span className="text-2xl">{s.icon}</span>
-                </div>
-                <p className="font-semibold">{s.title}</p>
-                <p className="text-sm text-grass">{s.body}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-4xl">
+      <section>
         <SectionTitle live>Loudest fanbases right now</SectionTitle>
-        <div className="mt-4">
+        <div className="mt-4 max-w-2xl">
           <MiniBoard stats={stats} />
         </div>
       </section>
