@@ -14,9 +14,9 @@ const display = Barlow_Condensed({
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "FanPulse — where World Cup fans get loud",
+  title: "12th Man — every team has eleven. You're the twelfth.",
   description:
-    "Get your Fan Card, cheer for your team, call the scores and push your country to the top of the loudest-fans leaderboard.",
+    "Pick your World Cup team, cheer with fans worldwide and call the scores before kickoff — every cheer and call is saved forever.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

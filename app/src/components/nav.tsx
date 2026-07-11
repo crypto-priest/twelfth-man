@@ -25,7 +25,7 @@ export function Nav() {
             <span className="relative rounded-full h-2.5 w-2.5 bg-pitch" />
           </span>
           <span className="font-display text-2xl font-bold uppercase tracking-wider">
-            Fan<span className="text-pitch">Pulse</span>
+            <span className="text-pitch">12</span>th Man
           </span>
         </Link>
 

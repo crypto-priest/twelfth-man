@@ -1,10 +1,10 @@
-// Hand-written to match programs/fanpulse/src/lib.rs (Anchor 0.31 IDL format).
-// Swap for target/idl/fanpulse.json once `anchor build` output is committed.
+// Hand-written to match programs/twelfth-man/src/lib.rs (Anchor 0.31 IDL format).
+// Swap for the generated target/idl json once `anchor build` output is committed.
 
 export const IDL = {
   address: "EwCR98M9we9XSNpNA7jnSh9HKXdQWtZPonLdJZ6yM6Kc",
   metadata: {
-    name: "fanpulse",
+    name: "twelfth_man",
     version: "0.1.0",
     spec: "0.1.0",
   },
