@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { WalletButton } from "./wallet-button";
@@ -17,17 +18,35 @@ const links = [
 
 export function Nav() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-edge bg-night/80 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-40 border-b transition-colors duration-300 ${
+        scrolled
+          ? "border-edge-soft bg-night/80 backdrop-blur-md"
+          : "border-transparent bg-transparent"
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="absolute inset-0 rounded-full bg-pitch animate-pulse-ring" />
-            <span className="relative rounded-full h-2.5 w-2.5 bg-pitch" />
+        <Link href="/" className="flex items-center gap-3">
+          <span className="flex flex-col items-center leading-none" aria-hidden>
+            <span className="font-display text-lg leading-none tracking-tight">
+              XII
+            </span>
+            <span className="text-[6.5px] font-bold uppercase tracking-[0.34em] text-muted">
+              Man
+            </span>
           </span>
-          <span className="font-display text-2xl uppercase tracking-wide">
-            <span className="text-gold">12</span>th Man
+          <span className="font-display text-xl uppercase leading-none tracking-tight">
+            12th Man
           </span>
         </Link>
 
@@ -38,7 +57,7 @@ export function Nav() {
               href={l.href}
               className={`rounded-full px-3.5 py-1.5 text-sm transition-colors ${
                 pathname === l.href
-                  ? "bg-pitch/10 text-pitch"
+                  ? "bg-pitch/40 text-gold"
                   : "text-grass hover:text-chalk"
               }`}
             >

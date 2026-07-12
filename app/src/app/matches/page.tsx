@@ -57,7 +57,7 @@ export default function MatchesPage() {
           {fixtures.length > 0 && (
             <section className="space-y-4">
               <SectionTitle live kicker="Fixtures">
-                Up next — make your call
+                Up next: make your call
               </SectionTitle>
               {fixtures.map((m) => (
                 <MatchCard
@@ -74,7 +74,7 @@ export default function MatchesPage() {
 
           {finished.length > 0 && (
             <section className="space-y-4 border-t border-edge pt-8">
-              <SectionTitle kicker="Results">Finished — final scores</SectionTitle>
+              <SectionTitle kicker="Results">Finished: final scores</SectionTitle>
               {finished.map((m) => (
                 <MatchCard
                   key={m.id}

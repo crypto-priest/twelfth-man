@@ -32,7 +32,7 @@ export default function ChantsPage() {
           The Chant Wall
         </h1>
         <p className="mt-1 text-grass">
-          Shout for your team. Every chant is saved forever — nobody can edit
+          Shout for your team. Every chant is saved forever. Nobody can edit
           it, nobody can delete it.
         </p>
       </header>
@@ -63,7 +63,7 @@ export default function ChantsPage() {
             onClick={() => setFilter(null)}
             className={`rounded-full border px-3.5 py-1.5 text-sm transition ${
               filter === null
-                ? "border-pitch/50 bg-pitch/10 text-pitch"
+                ? "border-gold/50 bg-pitch/40 text-gold"
                 : "border-edge text-grass hover:text-chalk"
             }`}
           >
@@ -77,7 +77,7 @@ export default function ChantsPage() {
                 onClick={() => setFilter(filter === code ? null : code)}
                 className={`rounded-full border px-3.5 py-1.5 text-sm transition ${
                   filter === code
-                    ? "border-pitch/50 bg-pitch/10 text-pitch"
+                    ? "border-gold/50 bg-pitch/40 text-gold"
                     : "border-edge text-grass hover:text-chalk"
                 }`}
               >
@@ -100,7 +100,7 @@ export default function ChantsPage() {
             body={
               filter
                 ? `No ${getTeam(filter).name} chants yet. Their fans must still be in the car park.`
-                : "No chants yet — be the first voice in the stadium."
+                : "No chants yet. Be the first voice in the stadium."
             }
           />
         ) : (

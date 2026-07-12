@@ -43,19 +43,19 @@ export default function CardPage() {
               href={shareOnXUrl(fan)}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-pitch-2"
+              className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-chalk transition hover:bg-pitch-2"
             >
               Share on X
             </a>
             <Link
               href="/chants"
-              className="rounded-full border border-edge px-6 py-2.5 text-sm font-semibold transition hover:border-pitch/50 hover:text-pitch"
+              className="rounded-full border border-edge px-6 py-2.5 text-sm font-semibold transition hover:border-gold/50 hover:text-gold"
             >
               Post a chant
             </Link>
             <Link
               href="/matches"
-              className="rounded-full border border-edge px-6 py-2.5 text-sm font-semibold transition hover:border-pitch/50 hover:text-pitch"
+              className="rounded-full border border-edge px-6 py-2.5 text-sm font-semibold transition hover:border-gold/50 hover:text-gold"
             >
               Call a score
             </Link>

@@ -120,7 +120,7 @@ export const IDL = {
     { code: 6001, name: "EmptyChant", msg: "Chant cannot be empty" },
     { code: 6002, name: "ChantTooLong", msg: "Chant is longer than 140 characters" },
     { code: 6003, name: "InvalidMatchId", msg: "Match id must be greater than 0" },
-    { code: 6004, name: "PredictionClosed", msg: "Kickoff has passed — predictions are closed" },
+    { code: 6004, name: "PredictionClosed", msg: "Kickoff has passed, predictions are closed" },
     { code: 6005, name: "MatchAlreadySettled", msg: "Result already posted for this match" },
     { code: 6006, name: "MatchNotSettled", msg: "Result not posted yet" },
     { code: 6007, name: "PredictionAlreadySettled", msg: "Prediction already settled" },

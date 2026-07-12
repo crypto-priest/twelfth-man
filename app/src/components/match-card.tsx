@@ -63,7 +63,7 @@ function Stepper({
       <div className="flex items-center gap-2">
         <button
           onClick={() => onChange(Math.max(0, value - 1))}
-          className="h-9 w-9 rounded-full border border-edge text-lg text-grass transition hover:border-pitch/50 hover:text-pitch"
+          className="h-9 w-9 rounded-full border border-edge text-lg text-grass transition hover:border-gold/50 hover:text-gold"
           aria-label={`decrease ${label} score`}
         >
           −
@@ -73,7 +73,7 @@ function Stepper({
         </span>
         <button
           onClick={() => onChange(Math.min(20, value + 1))}
-          className="h-9 w-9 rounded-full border border-edge text-lg text-grass transition hover:border-pitch/50 hover:text-pitch"
+          className="h-9 w-9 rounded-full border border-edge text-lg text-grass transition hover:border-gold/50 hover:text-gold"
           aria-label={`increase ${label} score`}
         >
           +
@@ -115,7 +115,7 @@ export function MatchCard({
       await sendIx(connection, { publicKey, sendTransaction }, build());
       onChanged?.();
     } catch (e) {
-      setError("That didn't go through — give it another try.");
+      setError("That didn't go through. Give it another try.");
       console.error(e);
     } finally {
       setBusy(false);
@@ -132,7 +132,7 @@ export function MatchCard({
         {String(match.id).padStart(2, "0")}
       </span>
 
-      <div className="flex items-center justify-between gap-2 border-b border-edge/70 bg-gradient-to-r from-white/[0.04] to-transparent px-5 py-2.5 text-xs">
+      <div className="flex items-center justify-between gap-2 border-b border-edge/70 bg-gradient-to-r from-chalk/[0.03] to-transparent px-5 py-2.5 text-xs">
         <span className="font-display text-sm uppercase tracking-wider text-grass">
           Match {String(match.id).padStart(2, "0")}
         </span>
@@ -146,7 +146,7 @@ export function MatchCard({
             {liveNow
               ? live.clock
               : live?.state === "post"
-                ? "Full time — result on its way"
+                ? "Full time, result on its way"
                 : "Waiting for the final score"}
           </span>
         ) : (
@@ -201,7 +201,7 @@ export function MatchCard({
                     ? "bg-gold/15 text-gold"
                     : prediction.points === 1
                       ? "bg-gold/10 text-gold/80"
-                      : "bg-white/5 text-grass"
+                      : "bg-chalk/5 text-grass"
                 }`}
               >
                 {prediction.points === 3
@@ -216,13 +216,13 @@ export function MatchCard({
                   run(() => settlePredictionIx(match.id, publicKey!, fan.team))
                 }
                 disabled={busy}
-                className="ml-auto rounded-full bg-pitch px-5 py-2 text-sm font-semibold text-night transition hover:bg-pitch-2 disabled:opacity-40"
+                className="ml-auto rounded-full bg-pitch px-5 py-2 text-sm font-semibold text-chalk transition hover:bg-pitch-2 disabled:opacity-40"
               >
                 {busy ? "Collecting…" : "Collect my points"}
               </button>
             ) : (
               <span className="ml-auto text-xs text-grass">
-                {match.settled ? "" : "🔒 Locked — can't be changed"}
+                {match.settled ? "" : "🔒 Locked. Can't be changed."}
               </span>
             )}
           </div>
@@ -230,7 +230,7 @@ export function MatchCard({
           publicKey && fan ? (
             <div className="space-y-3">
               <p className="text-center text-xs text-grass">
-                Your score prediction — nail the exact score: 3 pts · call the
+                Your score prediction. Nail the exact score: 3 pts · call the
                 right result: 1 pt
               </p>
               <div className="flex flex-wrap items-center justify-center gap-6">
@@ -247,7 +247,7 @@ export function MatchCard({
                 <button
                   onClick={() => run(() => predictIx(publicKey, match.id, home, away))}
                   disabled={busy}
-                  className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-pitch-2 disabled:opacity-40"
+                  className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-chalk transition hover:bg-pitch-2 disabled:opacity-40"
                 >
                   {busy ? "Locking it in…" : `Lock my ${home}–${away} call`}
                 </button>

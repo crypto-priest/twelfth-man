@@ -46,7 +46,7 @@ function CopyButton({ text }: { text: string }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     } catch {
-      // clipboard blocked — the text is right there to select
+      // clipboard blocked; the text is right there to select
     }
   }
 
@@ -55,8 +55,8 @@ function CopyButton({ text }: { text: string }) {
       onClick={copy}
       className={`shrink-0 rounded-full border px-4 py-1.5 text-xs font-semibold transition ${
         copied
-          ? "border-pitch/50 bg-pitch/10 text-pitch"
-          : "border-edge text-grass hover:border-pitch/50 hover:text-pitch"
+          ? "border-gold/50 bg-pitch/40 text-gold"
+          : "border-edge text-grass hover:border-gold/50 hover:text-gold"
       }`}
     >
       {copied ? "Copied!" : "Copy"}
@@ -98,7 +98,7 @@ export default function DemoPage() {
             href="https://phantom.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-pitch underline-offset-4 hover:underline"
+            className="text-gold underline-offset-4 hover:underline"
           >
             Phantom
           </a>{" "}
@@ -110,7 +110,7 @@ export default function DemoPage() {
         <p>
           In Phantom: <span className="text-chalk">Settings → Developer Settings →
           Testnet Mode ON</span>. That switches it to Solana&apos;s practice
-          network (devnet) — nothing here costs real money.
+          network (devnet). Nothing here costs real money.
         </p>
       </Step>
 
@@ -125,7 +125,7 @@ export default function DemoPage() {
             <div className="flex items-center justify-between gap-3">
               <p className="font-semibold text-chalk">{a.label}</p>
               <span className="rounded-full bg-amber-400/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-amber-300">
-                Shared public test account — devnet only, no real value
+                Shared public test account, devnet only, no real value
               </span>
             </div>
             <div className="mt-3 flex items-center gap-3">
@@ -138,7 +138,7 @@ export default function DemoPage() {
           </div>
         ))}
         <p>
-          One team per account, forever — if the account already has a Fan Card,
+          One team per account, forever. If the account already has a Fan Card,
           that step is done for you; everything else still works. There are two
           accounts so a second tester can pick a rival team.
         </p>
@@ -151,7 +151,7 @@ export default function DemoPage() {
             href="https://faucet.solana.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-pitch underline-offset-4 hover:underline"
+            className="text-gold underline-offset-4 hover:underline"
           >
             faucet.solana.com
           </a>
@@ -163,17 +163,16 @@ export default function DemoPage() {
         <ol className="space-y-2">
           {script.map((s, i) => (
             <li key={s.title} className="flex items-start gap-2.5">
-              <span className="font-display text-base font-bold text-pitch">
+              <span className="font-display text-base font-bold text-gold">
                 {i + 1}.
               </span>
               <p>
                 <Link
                   href={s.href}
-                  className="font-semibold text-chalk underline-offset-4 hover:text-pitch hover:underline"
+                  className="font-semibold text-chalk underline-offset-4 hover:text-gold hover:underline"
                 >
                   {s.title}
-                </Link>{" "}
-                — {s.body}
+                </Link>. {s.body}
               </p>
             </li>
           ))}
@@ -190,7 +189,7 @@ export default function DemoPage() {
           href="https://explorer.solana.com/address/EwCR98M9we9XSNpNA7jnSh9HKXdQWtZPonLdJZ6yM6Kc?cluster=devnet"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono text-pitch underline-offset-4 hover:underline"
+          className="font-mono text-gold underline-offset-4 hover:underline"
         >
           EwCR98M9…yM6Kc
         </a>{" "}

@@ -39,7 +39,7 @@ export function ComposeBox({
       setMatchId(0);
       onPosted?.();
     } catch (e) {
-      setError("That didn't go through — give it another try.");
+      setError("That didn't go through. Give it another try.");
       console.error(e);
     } finally {
       setBusy(false);
@@ -60,14 +60,14 @@ export function ComposeBox({
         rows={3}
         maxLength={MAX_CHANT_LEN * 2}
         placeholder="Make some noise… VAMOS!"
-        className="mt-3 w-full resize-none rounded-xl border border-edge bg-night/60 p-3 text-[15px] outline-none transition-colors placeholder:text-grass/50 focus:border-pitch/40"
+        className="mt-3 w-full resize-none rounded-xl border border-edge bg-night/60 p-3 text-[15px] outline-none transition-colors placeholder:text-grass/50 focus:border-gold/40"
       />
       <div className="mt-3 flex flex-wrap items-center gap-3">
         {matches && matches.length > 0 && (
           <select
             value={matchId}
             onChange={(e) => setMatchId(Number(e.target.value))}
-            className="rounded-full border border-edge bg-night/60 px-3 py-1.5 text-sm text-grass outline-none focus:border-pitch/40"
+            className="rounded-full border border-edge bg-night/60 px-3 py-1.5 text-sm text-grass outline-none focus:border-gold/40"
           >
             <option value={0}>Just cheering</option>
             {matches.map((m) => (
@@ -87,7 +87,7 @@ export function ComposeBox({
         <button
           onClick={post}
           disabled={!canPost}
-          className="rounded-full bg-pitch px-6 py-2 text-sm font-semibold text-night transition hover:bg-pitch-2 disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-full bg-pitch px-6 py-2 text-sm font-semibold text-chalk transition hover:bg-pitch-2 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {busy ? "Posting…" : "Post chant"}
         </button>

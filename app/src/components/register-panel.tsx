@@ -24,7 +24,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
       );
       onRegistered?.();
     } catch (e) {
-      setError("That didn't go through — give it another try.");
+      setError("That didn't go through. Give it another try.");
       console.error(e);
     } finally {
       setBusy(false);
@@ -49,7 +49,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
               onClick={() => setPicked(t.code)}
               className={`flex flex-col items-center gap-1 rounded-xl border p-3 transition ${
                 active
-                  ? "border-pitch bg-pitch/10"
+                  ? "border-gold bg-pitch/30"
                   : "border-edge bg-night/40 hover:border-grass/40"
               }`}
               style={active ? { boxShadow: `0 0 24px ${t.primary}44` } : undefined}
@@ -57,7 +57,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
               <span className="text-2xl">{t.flag}</span>
               <span
                 className={`text-xs font-bold tracking-wider ${
-                  active ? "text-pitch" : "text-grass"
+                  active ? "text-gold" : "text-grass"
                 }`}
               >
                 {t.code}
@@ -71,7 +71,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
         <button
           onClick={register}
           disabled={!picked || busy || !publicKey}
-          className="rounded-full bg-pitch px-8 py-3 font-semibold text-night transition hover:bg-pitch-2 disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-full bg-pitch px-8 py-3 font-semibold text-chalk transition hover:bg-pitch-2 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {busy
             ? "Making your card…"
@@ -81,7 +81,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
         </button>
         {picked && !busy && (
           <span className="text-sm text-grass">
-            {getTeam(picked).flag} {getTeam(picked).name} — no takebacks.
+            {getTeam(picked).flag} {getTeam(picked).name}, no takebacks.
           </span>
         )}
       </div>

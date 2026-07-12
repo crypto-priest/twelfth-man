@@ -81,9 +81,9 @@ export default function LeaderboardPage() {
                 layout
                 transition={{ type: "spring", stiffness: 350, damping: 32 }}
                 className={`grid grid-cols-[3rem_1fr_4.5rem_4.5rem] items-center gap-2 overflow-hidden border-b border-edge/60 px-4 py-3 transition-colors last:border-0 sm:grid-cols-[3.5rem_1fr_5rem_5rem_5rem] ${
-                  mine ? "bg-gold/[0.06]" : "hover:bg-white/[0.02]"
+                  mine ? "bg-gold/[0.06]" : "hover:bg-chalk/[0.03]"
                 }`}
-                style={mine ? { boxShadow: "inset 3px 0 0 #f5c24b" } : undefined}
+                style={mine ? { boxShadow: "inset 3px 0 0 #1A6E8E" } : undefined}
               >
                 <span
                   className={`score-slant -my-1 font-display tabular-nums leading-none ${
@@ -94,7 +94,7 @@ export default function LeaderboardPage() {
                   {move !== 0 && (
                     <span
                       className={`ml-1 align-middle font-sans text-xs ${
-                        move > 0 ? "text-pitch" : "text-red-400"
+                        move > 0 ? "text-gold" : "text-red-400"
                       }`}
                     >
                       {move > 0 ? "▲" : "▼"}

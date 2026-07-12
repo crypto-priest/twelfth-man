@@ -1,331 +1,282 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useFanCard } from "@/hooks/use-fan-card";
-import { useMatches } from "@/hooks/use-matches";
 import { useTeamStats } from "@/hooks/use-team-stats";
-import { useLiveScores } from "@/hooks/use-live-scores";
+import { useChants } from "@/hooks/use-chants";
 import { getTeam } from "@/lib/teams";
-import type { FanCard, TeamStats } from "@/lib/fanpulse";
-import { ChantTicker } from "@/components/chant-ticker";
-import { ComposeBox } from "@/components/compose-box";
+import { timeAgo } from "@/lib/format";
 import { CountUp } from "@/components/count-up";
-import { MatchCard } from "@/components/match-card";
-import { RegisterPanel } from "@/components/register-panel";
 import { SectionTitle } from "@/components/section-title";
-import { WalletButton } from "@/components/wallet-button";
 
-const HeroScene = dynamic(() => import("@/components/hero-scene"), {
-  ssr: false,
-  loading: () => null,
-});
+const features = [
+  {
+    icon: "🎽",
+    title: "Fan Card",
+    body: "Your permanent supporter badge. One team, one card, for the whole tournament.",
+    href: "/card",
+    cta: "Get yours",
+  },
+  {
+    icon: "📣",
+    title: "Chant Wall",
+    body: "Shout for your team on a live wall nobody can edit or delete.",
+    href: "/chants",
+    cta: "Hear the wall",
+  },
+  {
+    icon: "🎯",
+    title: "Score Calls",
+    body: "Lock your prediction before kickoff. Exact score: 3 pts. Right result: 1 pt.",
+    href: "/matches",
+    cta: "See the fixtures",
+  },
+];
 
 const steps = [
   {
-    icon: "🎟️",
     title: "Connect your wallet",
     body: "One tap. That's your ticket in.",
   },
   {
-    icon: "🎽",
     title: "Pick your team",
     body: "Get your free Fan Card for the country you back.",
   },
   {
-    icon: "📣",
-    title: "Cheer & call scores",
+    title: "Cheer and call scores",
     body: "Post chants, predict results, climb the world table.",
   },
 ];
 
-const medals = ["🥇", "🥈", "🥉"];
-
-function MiniBoard({ stats, myTeam }: { stats: TeamStats[] | null; myTeam?: string }) {
-  if (stats === null) return <div className="skeleton h-56" />;
-  if (stats.length === 0) {
-    return (
-      <div className="panel px-5 py-8 text-center text-sm text-grass">
-        The board is wide open. One chant puts your country on top.
-      </div>
-    );
-  }
-  return (
-    <div className="panel overflow-hidden">
-      {stats.slice(0, 5).map((t, i) => {
-        const team = getTeam(t.code);
-        const mine = myTeam === t.code;
-        return (
-          <div
-            key={t.code}
-            className={`flex items-center gap-3 border-b border-edge/60 px-4 py-2.5 last:border-0 ${
-              mine ? "bg-gold/[0.06]" : ""
-            }`}
-            style={mine ? { boxShadow: "inset 3px 0 0 #f5c24b" } : undefined}
-          >
-            <span className="w-6 text-center font-display text-lg text-grass">
-              {medals[i] ?? i + 1}
-            </span>
-            <span className="text-xl">{team.flag}</span>
-            <span className="min-w-0 flex-1 truncate text-sm font-semibold">
-              {team.name}
-              {mine && <span className="ml-2 text-xs font-bold text-gold">You</span>}
-            </span>
-            <span className="text-sm tabular-nums text-grass">
-              {t.chantCount.toLocaleString()} chants
-            </span>
-            <span className="score-slant w-14 text-right font-display text-lg tabular-nums text-gold">
-              {t.points.toLocaleString()}
-            </span>
-          </div>
-        );
-      })}
-      <Link
-        href="/leaderboard"
-        className="block border-t border-edge px-4 py-2.5 text-center text-sm text-pitch transition hover:bg-pitch/5"
-      >
-        Full leaderboard →
-      </Link>
-    </div>
-  );
-}
-
-function PersonalStrip({ fan }: { fan: FanCard }) {
-  const team = getTeam(fan.team);
-  return (
-    <Link
-      href="/card"
-      className="panel lift flex items-center gap-4 px-5 py-3.5 hover:border-pitch/40"
-    >
-      <span className="text-3xl">{team.flag}</span>
-      <div className="min-w-0 flex-1">
-        <p className="truncate font-semibold">You&apos;re backing {team.name}</p>
-        <p className="text-xs text-grass">Tap to see your full Fan Card</p>
-      </div>
-      <div className="text-right">
-        <CountUp
-          value={fan.points}
-          className="score-slant font-display text-2xl text-gold"
-        />
-        <p className="text-[11px] uppercase tracking-widest text-grass">Points</p>
-      </div>
-      <div className="text-right">
-        <CountUp value={fan.chantCount} className="score-slant font-display text-2xl" />
-        <p className="text-[11px] uppercase tracking-widest text-grass">Chants</p>
-      </div>
-    </Link>
-  );
-}
-
 export default function Home() {
-  const { fan, loading, connected, refresh } = useFanCard();
-  const { matches, predictions, refresh: refreshMatches } = useMatches();
+  const { fan, loading, connected } = useFanCard();
   const stats = useTeamStats();
-  const liveScores = useLiveScores();
-  const [fx, setFx] = useState(false);
+  const chants = useChants(15000);
+  const [imgOk, setImgOk] = useState(true);
 
-  useEffect(() => {
-    const wide = window.matchMedia("(min-width: 768px)").matches;
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let gl = false;
-    try {
-      const probe = document.createElement("canvas");
-      gl = !!(probe.getContext("webgl2") || probe.getContext("webgl"));
-    } catch {
-      gl = false;
-    }
-    setFx(wide && !calm && gl);
-  }, []);
-
-  const fixtures = (matches ?? []).filter((m) => !m.settled).slice(0, 3);
   const totalChants = stats?.reduce((n, t) => n + t.chantCount, 0) ?? 0;
   const totalFans = stats?.reduce((n, t) => n + t.fanCount, 0) ?? 0;
+  const myTeam = fan ? getTeam(fan.team) : null;
 
-  const onChanged = () => {
-    refreshMatches();
-    refresh();
-  };
-
-  // the matchday hub: everything a fan needs in one place
-  if (connected && (loading || fan)) {
-    return (
-      <div className="space-y-8">
-        {loading || !fan ? (
-          <div className="skeleton h-[74px]" />
-        ) : (
-          <PersonalStrip fan={fan} />
-        )}
-
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <section className="space-y-4 lg:col-start-1">
-            <div className="flex items-end justify-between">
-              <SectionTitle live kicker="Matchday">
-                Today&apos;s matches — make your call
-              </SectionTitle>
-              <Link
-                href="/matches"
-                className="text-sm text-pitch underline-offset-4 hover:underline"
-              >
-                All matches →
-              </Link>
-            </div>
-            {matches === null ? (
-              Array.from({ length: 2 }).map((_, i) => (
-                <div key={i} className="skeleton h-48" />
-              ))
-            ) : fixtures.length === 0 ? (
-              <div className="panel px-5 py-8 text-center text-sm text-grass">
-                No matches on the schedule right now. Check back soon.
-              </div>
-            ) : (
-              fixtures.map((m) => (
-                <MatchCard
-                  key={m.id}
-                  match={m}
-                  prediction={predictions.get(m.id)}
-                  fan={fan}
-                  live={liveScores.get(`${m.home}-${m.away}`)}
-                  onChanged={onChanged}
-                />
-              ))
-            )}
-          </section>
-
-          <section className="space-y-4 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-            <SectionTitle kicker="The wall">Get loud for your team</SectionTitle>
-            {fan && (
-              <ComposeBox
-                fan={fan}
-                matches={matches?.filter((m) => !m.settled)}
-                onPosted={refresh}
-              />
-            )}
-            <ChantTicker />
-          </section>
-
-          <section className="space-y-4 lg:col-start-1">
-            <SectionTitle kicker="World table">Loudest fanbases</SectionTitle>
-            <MiniBoard stats={stats} myTeam={fan?.team} />
-          </section>
-        </div>
-      </div>
-    );
-  }
-
-  // first visit: say what this is, then get them a fan card without leaving home
   return (
-    <div className="space-y-12">
-      <section className="relative">
-        {fx && (
-          <div className="pointer-events-none absolute -right-24 -top-16 hidden h-[480px] w-[560px] md:block">
-            <HeroScene />
-          </div>
-        )}
+    <div className="space-y-16">
+      {connected && !loading && fan && myTeam && (
+        <div className="panel flex flex-wrap items-center gap-3 px-5 py-3 text-sm">
+          <span className="text-xl">{myTeam.flag}</span>
+          <span className="min-w-0 flex-1 truncate text-grass">
+            Welcome back. You&apos;re backing{" "}
+            <span className="font-semibold text-chalk">{myTeam.name}</span>.
+          </span>
+          <Link href="/card" className="font-semibold text-gold hover:underline">
+            My card →
+          </Link>
+          <Link href="/matches" className="font-semibold text-gold hover:underline">
+            Today&apos;s matches →
+          </Link>
+        </div>
+      )}
 
-        <div className="relative max-w-xl pt-4">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
+      <section className="relative left-1/2 -mt-24 w-screen -translate-x-1/2 overflow-hidden">
+        {/* spotlight glow behind the ball, like a piece under gallery light */}
+        <div className="absolute inset-0 bg-[radial-gradient(1000px_600px_at_50%_22%,#46555f,#212a31_72%)]" />
+        {imgOk && (
+          <Image
+            src="/hero-crack.png"
+            alt="A football smashing through cracked glass"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-90"
+            onError={() => setImgOk(false)}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-night/60 via-night/10 to-night" />
+
+        <div className="relative mx-auto flex min-h-[100svh] max-w-5xl flex-col items-center justify-center px-6 py-28 text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.4em] text-chalk/90">
             World Cup 2026
           </p>
-          <h1 className="mt-3 font-display text-5xl uppercase leading-[0.95] tracking-tight sm:text-6xl">
+          <h1 className="metal-text mt-5 font-display text-6xl uppercase leading-[0.92] tracking-tight sm:text-8xl">
             Pick your nation.
             <br />
-            <span className="text-gold glow-gold">Own the match.</span>
+            Own the match.
           </h1>
-          <p className="mt-3 font-head text-lg font-medium uppercase tracking-wide text-grass">
-            Every team has eleven. You&apos;re the twelfth.
+          <p className="mt-6 max-w-xl text-sm text-chalk/90 sm:text-base">
+            Cheer with fans worldwide and call the scores before kickoff. Every
+            cheer and call is saved forever, so your bragging rights are
+            provable.
           </p>
-          <p className="mt-4 text-grass">
-            Pick your World Cup team, cheer with fans worldwide, and call the
-            scores before kickoff — every cheer and call is saved forever, so
-            your bragging rights are provable.
-          </p>
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/card"
+              className="rounded-full bg-pitch px-8 py-3.5 font-semibold text-chalk shadow-[0_12px_40px_rgba(18,78,102,0.45)] transition hover:bg-pitch-2"
+            >
+              Get your Fan Card
+            </Link>
+            <Link
+              href="/demo"
+              className="rounded-full border border-chalk/30 bg-night/40 px-8 py-3.5 font-semibold text-chalk backdrop-blur transition hover:border-chalk/60"
+            >
+              See the demo
+            </Link>
+          </div>
         </div>
 
-        <div className="relative mt-8 grid gap-3 sm:grid-cols-3">
+        <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-muted">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-6 w-6">
+            <path d="M6 9.5 12 15.5l6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-3xl text-center">
+        <SectionTitle kicker="What is 12th Man?">The crowd, counted</SectionTitle>
+        <p className="mt-4 text-grass">
+          Every team has eleven players. The twelfth is the crowd, and that&apos;s
+          you. Back your nation, cheer, and call the scores. Everything you do
+          here is saved permanently, so your support is provable, forever.{" "}
+          <Link href="/about" className="text-gold hover:underline">
+            More about 12th Man →
+          </Link>
+        </p>
+      </section>
+
+      <section>
+        <SectionTitle kicker="The game">Three ways to show up</SectionTitle>
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
+          {features.map((f) => (
+            <Link key={f.title} href={f.href} className="panel lift flex flex-col gap-2.5 p-6">
+              <span className="text-3xl">{f.icon}</span>
+              <p className="font-display text-xl uppercase tracking-tight">{f.title}</p>
+              <p className="text-sm text-grass">{f.body}</p>
+              <span className="mt-auto pt-2 text-sm font-semibold text-gold">
+                {f.cta} →
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section id="how-it-works" className="scroll-mt-24">
+        <SectionTitle kicker="Two minutes">How it works</SectionTitle>
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
           {steps.map((s, i) => {
             const done = (i === 0 && connected) || (i === 1 && connected && !!fan);
             return (
-              <div key={s.title} className="panel lift flex items-start gap-3 p-4">
+              <div key={s.title} className="panel flex items-start gap-3.5 p-5">
                 <span
-                  className={`mt-0.5 flex h-7 w-7 shrink-0 -rotate-3 items-center justify-center rounded-[7px] font-display text-base ${
-                    done ? "bg-pitch text-night" : "bg-gold/15 text-gold"
+                  className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-display text-base ${
+                    done ? "bg-pitch text-chalk" : "bg-chalk/10 text-chalk"
                   }`}
                 >
                   {done ? "✓" : i + 1}
                 </span>
                 <div>
-                  <p className="text-sm font-semibold">
-                    {s.title} <span className="ml-1">{s.icon}</span>
-                  </p>
+                  <p className="text-sm font-semibold">{s.title}</p>
                   <p className="mt-0.5 text-xs text-grass">{s.body}</p>
                 </div>
               </div>
             );
           })}
         </div>
-
-        <div className="relative mt-7 flex flex-wrap items-center gap-4">
-          {!connected ? (
-            <>
-              <WalletButton />
-              <p className="text-sm text-grass">Free, takes one tap — start here.</p>
-            </>
-          ) : (
-            !loading &&
-            !fan && (
-              <p className="text-sm text-grass">
-                You&apos;re in. Now pick your team below 👇
-              </p>
-            )
-          )}
-        </div>
-
-        <p className="relative mt-4 text-sm text-grass">
-          New here?{" "}
-          <Link
-            href="/about"
-            className="text-gold underline-offset-4 hover:underline"
-          >
-            Read the 2-minute About →
-          </Link>
-        </p>
-      </section>
-
-      {connected && !loading && !fan && <RegisterPanel onRegistered={refresh} />}
-
-      <section id="how-it-works" className="scroll-mt-24">
-        <div className="flex gap-10">
-          <div>
-            <CountUp
-              value={totalChants}
-              className="font-display text-3xl font-bold tabular-nums"
-            />
-            <p className="text-xs uppercase tracking-widest text-grass">Chants</p>
-          </div>
-          <div>
-            <CountUp
-              value={totalFans}
-              className="font-display text-3xl font-bold tabular-nums"
-            />
-            <p className="text-xs uppercase tracking-widest text-grass">Fans</p>
-          </div>
-          <div>
-            <CountUp
-              value={stats?.length ?? 0}
-              className="font-display text-3xl font-bold tabular-nums"
-            />
-            <p className="text-xs uppercase tracking-widest text-grass">Countries</p>
-          </div>
-        </div>
       </section>
 
       <section>
-        <SectionTitle live kicker="World table">
-          Loudest fanbases right now
-        </SectionTitle>
-        <div className="mt-4 max-w-2xl">
-          <MiniBoard stats={stats} />
+        <SectionTitle live kicker="Right now">The pulse</SectionTitle>
+        <div className="mt-5 grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="panel flex items-center justify-around gap-4 px-6 py-7">
+            <div className="text-center">
+              <CountUp
+                value={totalFans}
+                className="score-slant font-display text-4xl tabular-nums"
+              />
+              <p className="mt-1 text-[11px] uppercase tracking-widest text-muted">
+                Fans
+              </p>
+            </div>
+            <div className="text-center">
+              <CountUp
+                value={totalChants}
+                className="score-slant font-display text-4xl tabular-nums text-gold"
+              />
+              <p className="mt-1 text-[11px] uppercase tracking-widest text-muted">
+                Chants
+              </p>
+            </div>
+            <div className="text-center">
+              <CountUp
+                value={stats?.length ?? 0}
+                className="score-slant font-display text-4xl tabular-nums"
+              />
+              <p className="mt-1 text-[11px] uppercase tracking-widest text-muted">
+                Countries
+              </p>
+            </div>
+          </div>
+
+          <div className="panel overflow-hidden">
+            {chants === null ? (
+              <div className="space-y-2 p-3">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="skeleton h-12" />
+                ))}
+              </div>
+            ) : chants.length === 0 ? (
+              <p className="px-5 py-8 text-center text-sm text-grass">
+                No chants yet. Be the first voice in the stadium.
+              </p>
+            ) : (
+              chants.slice(0, 3).map((c) => {
+                const team = getTeam(c.team);
+                return (
+                  <div
+                    key={`${c.author.toBase58()}-${c.timestamp}`}
+                    className="flex items-start gap-3 border-b border-edge-soft px-4 py-3 last:border-0"
+                  >
+                    <span className="text-xl">{team.flag}</span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm">{c.text}</p>
+                      <p className="mt-0.5 text-[11px] text-muted">
+                        {team.code} · {timeAgo(c.timestamp)}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+            <Link
+              href="/chants"
+              className="block border-t border-edge-soft px-4 py-2.5 text-center text-sm text-gold transition hover:bg-pitch/20"
+            >
+              Hear them all →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="panel relative overflow-hidden px-6 py-12 text-center">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_260px_at_50%_0%,rgba(18,78,102,0.35),transparent_70%)]" />
+        <h2 className="metal-text relative font-display text-4xl uppercase tracking-tight sm:text-5xl">
+          Your nation needs you
+        </h2>
+        <p className="relative mt-3 text-sm text-grass">
+          Free to join, two minutes to set up, bragging rights forever.
+        </p>
+        <div className="relative mt-7 flex flex-wrap justify-center gap-3">
+          <Link
+            href="/card"
+            className="rounded-full bg-pitch px-7 py-3 font-semibold text-chalk transition hover:bg-pitch-2"
+          >
+            Get your Fan Card
+          </Link>
+          <Link
+            href="/demo"
+            className="rounded-full border border-edge px-7 py-3 font-semibold text-chalk transition hover:border-gold/50 hover:text-gold"
+          >
+            Try the demo
+          </Link>
         </div>
       </section>
     </div>

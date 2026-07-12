@@ -256,7 +256,7 @@ export function parseChantEvents(logs: string[]): ChantEvent[] {
       });
     }
   } catch {
-    // unparseable logs from other programs sharing the tx — ignore
+    // unparseable logs from other programs sharing the tx, ignore
   }
   return out;
 }

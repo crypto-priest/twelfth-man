@@ -29,7 +29,7 @@ export function ChantTicker() {
               return (
                 <div
                   key={chantKey(c)}
-                  className="flex items-start gap-3 rounded-xl px-3 py-2 animate-ticker-in hover:bg-white/[0.03]"
+                  className="flex items-start gap-3 rounded-xl px-3 py-2 animate-ticker-in hover:bg-chalk/[0.03]"
                   style={{ animationDelay: `${Math.min(i, 6) * 70}ms` }}
                 >
                   <span className="mt-0.5 text-xl">{team.flag}</span>
@@ -50,11 +50,11 @@ export function ChantTicker() {
               <div className="flex flex-col items-center gap-3 p-6 text-center">
                 <span className="text-3xl">📣</span>
                 <p className="text-sm text-grass">
-                  The stands are warming up — add your voice.
+                  The stands are warming up. Add your voice.
                 </p>
                 <Link
                   href="/chants"
-                  className="rounded-full bg-pitch px-5 py-2 text-sm font-semibold text-night transition hover:bg-pitch-2"
+                  className="rounded-full bg-pitch px-5 py-2 text-sm font-semibold text-chalk transition hover:bg-pitch-2"
                 >
                   Post a chant
                 </Link>

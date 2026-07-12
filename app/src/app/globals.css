@@ -8,36 +8,23 @@
 
 body {
   @apply bg-night text-chalk antialiased;
-  /* warm floodlights from the top corners, green wash from the pitch below */
+  /* one big soft spotlight, gallery style */
   background-image:
-    linear-gradient(112deg, transparent 30%, rgba(255, 240, 200, 0.03) 38%, transparent 46%),
-    linear-gradient(248deg, transparent 30%, rgba(255, 240, 200, 0.025) 38%, transparent 46%),
-    radial-gradient(1100px 500px at 14% -10%, rgba(255, 236, 190, 0.07), transparent 60%),
-    radial-gradient(950px 460px at 86% -8%, rgba(255, 236, 190, 0.05), transparent 60%),
-    radial-gradient(1500px 850px at 50% 118%, rgba(14, 92, 57, 0.26), transparent 65%);
+    radial-gradient(1100px 620px at 50% -14%, rgba(211, 217, 212, 0.1), transparent 62%),
+    radial-gradient(900px 500px at 85% 8%, rgba(18, 78, 102, 0.16), transparent 60%),
+    radial-gradient(1500px 850px at 50% 118%, rgba(18, 78, 102, 0.14), transparent 65%),
+    linear-gradient(180deg, #212a31 0%, #1a2228 100%);
   background-attachment: fixed;
 }
 
-/* vignette + film grain keep it from looking flat */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    130% 100% at 50% 30%,
-    transparent 55%,
-    rgba(2, 8, 5, 0.5) 100%
-  );
-}
+/* faint film grain so the dark doesn't read flat */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 40;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -47,7 +34,6 @@ body::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.5;
 }
 .pitch-lines::before {
   content: "";
@@ -56,7 +42,7 @@ body::after {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(rgba(244, 241, 228, 0.05), rgba(244, 241, 228, 0.015));
+  background: linear-gradient(rgba(211, 217, 212, 0.05), rgba(211, 217, 212, 0.015));
 }
 .pitch-lines::after {
   content: "";
@@ -66,22 +52,31 @@ body::after {
   width: min(56vw, 640px);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(244, 241, 228, 0.04);
+  border: 1px solid rgba(211, 217, 212, 0.04);
   border-radius: 50%;
 }
 
+/* dark frosted glass */
 .panel {
-  @apply rounded-2xl border border-edge/70 backdrop-blur-md;
+  @apply rounded-2xl border border-edge-soft backdrop-blur-md;
   background:
-    linear-gradient(180deg, rgba(255, 249, 230, 0.045), rgba(255, 249, 230, 0) 40%),
-    rgba(16, 51, 36, 0.8);
-  box-shadow: 0 32px 64px -36px rgba(0, 0, 0, 0.8);
+    linear-gradient(180deg, rgba(211, 217, 212, 0.05), rgba(211, 217, 212, 0) 42%),
+    rgba(46, 57, 68, 0.6);
+  box-shadow: 0 28px 56px -32px rgba(0, 0, 0, 0.7);
 }
 
-/* Anton only ships one weight — stop the browser faking bolds */
 .font-display {
-  font-weight: 400;
+  font-weight: 800;
+  letter-spacing: -0.01em;
   font-synthesis: none;
+}
+
+/* metallic gradient fill for display headlines */
+.metal-text {
+  background: linear-gradient(102deg, #d3d9d4 0%, #748d92 42%, #43555c 68%, #d3d9d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* broadcast-graphics slant for big scores */
@@ -91,17 +86,17 @@ body::after {
 }
 
 .glow-text {
-  text-shadow: 0 0 24px rgba(55, 245, 140, 0.45);
+  text-shadow: 0 0 26px rgba(211, 217, 212, 0.25);
 }
 .glow-gold {
-  text-shadow: 0 0 28px rgba(245, 194, 75, 0.4);
+  text-shadow: 0 0 26px rgba(130, 180, 205, 0.3);
 }
 
 /* tv-style live bug: red box, blinking dot */
 .live-bug {
   @apply inline-flex items-center gap-1.5 rounded-[5px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white;
   background: #ff3b44;
-  box-shadow: 0 2px 14px rgba(255, 59, 68, 0.35);
+  box-shadow: 0 2px 12px rgba(255, 59, 68, 0.3);
 }
 .live-bug::before {
   content: "";
@@ -123,24 +118,24 @@ body::after {
 }
 .lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 48px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45);
 }
 
 .skeleton {
   @apply rounded-lg;
   background: linear-gradient(
     100deg,
-    rgba(244, 241, 228, 0.04) 40%,
-    rgba(244, 241, 228, 0.1) 50%,
-    rgba(244, 241, 228, 0.04) 60%
+    rgba(211, 217, 212, 0.05) 40%,
+    rgba(211, 217, 212, 0.11) 50%,
+    rgba(211, 217, 212, 0.05) 60%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s linear infinite;
 }
 
-/* wallet-adapter modal + button, reskinned for the stadium */
+/* wallet-adapter modal + button, reskinned for the gallery dark */
 .wallet-adapter-button-trigger {
-  @apply !h-10 !rounded-full !bg-pitch !px-5 !font-sans !text-sm !font-semibold !text-night;
+  @apply !h-10 !rounded-full !bg-pitch !px-5 !font-sans !text-sm !font-semibold !text-chalk;
 }
 .wallet-adapter-button-trigger:not([disabled]):hover {
   @apply !bg-pitch-2;
@@ -148,27 +143,27 @@ body::after {
 .wallet-adapter-dropdown-list,
 .wallet-adapter-modal-wrapper {
   @apply !bg-panel !text-chalk;
-  border: 1px solid #1e4733;
+  border: 1px solid #46555f;
 }
 .wallet-adapter-modal-overlay {
-  background: rgba(3, 10, 7, 0.85);
+  background: rgba(10, 15, 19, 0.75);
 }
 .wallet-adapter-modal-button-close {
-  @apply !bg-edge;
+  @apply !bg-panel-2;
 }
 .wallet-adapter-modal-list .wallet-adapter-button:hover {
-  @apply !bg-edge;
+  @apply !bg-panel-2;
 }
 
 ::selection {
-  background: rgba(245, 194, 75, 0.35);
+  background: rgba(26, 110, 142, 0.45);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e4733;
+  background: #46555f;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-track {
