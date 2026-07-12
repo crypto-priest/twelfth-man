@@ -278,6 +278,16 @@ export default function Home() {
             )
           )}
         </div>
+
+        <p className="relative mt-4 text-sm text-grass">
+          New here?{" "}
+          <Link
+            href="/about"
+            className="text-gold underline-offset-4 hover:underline"
+          >
+            Read the 2-minute About →
+          </Link>
+        </p>
       </section>
 
       {connected && !loading && !fan && <RegisterPanel onRegistered={refresh} />}
