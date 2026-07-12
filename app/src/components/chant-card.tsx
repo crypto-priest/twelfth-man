@@ -17,7 +17,7 @@ export function ChantCard({ chant }: { chant: FeedChant }) {
       style={
         isMatchDay
           ? {
-              backgroundImage: `linear-gradient(#0e2218, #0e2218), linear-gradient(120deg, ${team.primary}, #ffd75e66, ${team.secondary})`,
+              backgroundImage: `linear-gradient(#0c2419, #0c2419), linear-gradient(120deg, ${team.primary}, #f5c24b66, ${team.secondary})`,
               backgroundOrigin: "border-box",
               backgroundClip: "padding-box, border-box",
               border: "1px solid transparent",

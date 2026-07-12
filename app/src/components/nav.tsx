@@ -52,21 +52,6 @@ export function Nav() {
         </div>
       </div>
 
-      <nav className="flex gap-1 overflow-x-auto px-4 pb-2 md:hidden">
-        {links.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className={`whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm ${
-              pathname === l.href
-                ? "bg-pitch/10 text-pitch"
-                : "text-grass"
-            }`}
-          >
-            {l.label}
-          </Link>
-        ))}
-      </nav>
     </header>
   );
 }

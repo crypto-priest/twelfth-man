@@ -62,7 +62,7 @@ function MiniBoard({ stats, myTeam }: { stats: TeamStats[] | null; myTeam?: stri
             className={`flex items-center gap-3 border-b border-edge/60 px-4 py-2.5 last:border-0 ${
               mine ? "bg-gold/[0.06]" : ""
             }`}
-            style={mine ? { boxShadow: "inset 3px 0 0 #ffd75e" } : undefined}
+            style={mine ? { boxShadow: "inset 3px 0 0 #f5c24b" } : undefined}
           >
             <span className="w-6 text-center font-display text-lg text-grass">
               {medals[i] ?? i + 1}
@@ -227,10 +227,12 @@ export default function Home() {
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
             World Cup 2026
           </p>
-          <h1 className="mt-3 font-display text-6xl uppercase leading-none tracking-tight sm:text-7xl">
-            <span className="text-gold glow-gold">12</span>th Man
+          <h1 className="mt-3 font-display text-5xl uppercase leading-[0.95] tracking-tight sm:text-6xl">
+            Pick your nation.
+            <br />
+            <span className="text-gold glow-gold">Own the match.</span>
           </h1>
-          <p className="mt-2 font-display text-xl uppercase tracking-wide text-chalk">
+          <p className="mt-3 font-head text-lg font-medium uppercase tracking-wide text-grass">
             Every team has eleven. You&apos;re the twelfth.
           </p>
           <p className="mt-4 text-grass">

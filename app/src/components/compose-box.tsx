@@ -87,7 +87,7 @@ export function ComposeBox({
         <button
           onClick={post}
           disabled={!canPost}
-          className="rounded-full bg-pitch px-6 py-2 text-sm font-semibold text-night transition hover:bg-[#33ff9f] disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-full bg-pitch px-6 py-2 text-sm font-semibold text-night transition hover:bg-pitch-2 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {busy ? "Posting…" : "Post chant"}
         </button>

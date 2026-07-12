@@ -43,7 +43,7 @@ export default function CardPage() {
               href={shareOnXUrl(fan)}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-[#33ff9f]"
+              className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-pitch-2"
             >
               Share on X
             </a>

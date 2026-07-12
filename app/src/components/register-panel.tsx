@@ -71,7 +71,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
         <button
           onClick={register}
           disabled={!picked || busy || !publicKey}
-          className="rounded-full bg-pitch px-8 py-3 font-semibold text-night transition hover:bg-[#33ff9f] disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-full bg-pitch px-8 py-3 font-semibold text-night transition hover:bg-pitch-2 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {busy
             ? "Making your card…"

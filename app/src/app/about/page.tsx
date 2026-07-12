@@ -109,7 +109,7 @@ export default function AboutPage() {
       <div className="flex flex-wrap gap-3 pt-2">
         <Link
           href="/demo"
-          className="rounded-full bg-pitch px-7 py-3 font-semibold text-night transition hover:bg-[#33ff9f]"
+          className="rounded-full bg-pitch px-7 py-3 font-semibold text-night transition hover:bg-pitch-2"
         >
           Try the demo
         </Link>

@@ -5,16 +5,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        night: "#081711",
-        panel: "#0e2218",
-        edge: "#203b2a",
-        pitch: "#00ff87",
-        gold: "#ffd75e",
-        chalk: "#f4f1e4",
-        grass: "#94ab9a",
+        night: "#05110B",
+        "night-2": "#081A12",
+        panel: "#0C2419",
+        "panel-2": "#0F2E20",
+        edge: "#1E4733",
+        "edge-soft": "#FFFFFF14",
+        pitch: "#37F58C",
+        "pitch-2": "#19C56B",
+        "pitch-deep": "#0E5C39",
+        gold: "#F5C24B",
+        "gold-2": "#E0A62E",
+        "gold-deep": "#6B4E17",
+        live: "#FF3B44",
+        chalk: "#EAF6EF",
+        grass: "#A9CBB9",
+        muted: "#6E9683",
       },
       fontFamily: {
         display: ["var(--font-display)"],
+        head: ["var(--font-head)"],
         sans: ["var(--font-body)"],
       },
       keyframes: {

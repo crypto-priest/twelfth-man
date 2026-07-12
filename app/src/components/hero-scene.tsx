@@ -52,13 +52,13 @@ function Ball() {
       </mesh>
       <mesh scale={1.003}>
         <icosahedronGeometry args={[1.55, 1]} />
-        <meshBasicMaterial color="#00ff87" wireframe transparent opacity={0.3} />
+        <meshBasicMaterial color="#37f58c" wireframe transparent opacity={0.3} />
       </mesh>
     </group>
   );
 }
 
-const PALETTE = ["#ffd75e", "#00ff87", "#75aadb", "#ffd75e", "#e30613", "#fff4dd", "#f36c21", "#ffd75e"];
+const PALETTE = ["#f5c24b", "#37f58c", "#75aadb", "#f5c24b", "#e30613", "#fff4dd", "#f36c21", "#f5c24b"];
 
 function Crowd() {
   const points = useRef<THREE.Points>(null);
@@ -164,8 +164,8 @@ export default function HeroScene() {
       >
         <ambientLight intensity={0.45} />
         <directionalLight position={[4, 6, 3]} intensity={1.7} color="#fff2d6" />
-        <pointLight position={[-5, -2, 2]} intensity={1.1} color="#ffd75e" />
-        <pointLight position={[5, 1, 3]} intensity={0.5} color="#00ff87" />
+        <pointLight position={[-5, -2, 2]} intensity={1.1} color="#f5c24b" />
+        <pointLight position={[5, 1, 3]} intensity={0.5} color="#37f58c" />
         <Ball />
         <Crowd />
         <Floodlight position={[-4.5, 5.5, -1]} target={[0, 0, 0]} />

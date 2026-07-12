@@ -44,7 +44,7 @@ export function FanCardView({ fan }: { fan: FanCard }) {
         className="relative overflow-hidden rounded-3xl p-[2px]"
         style={{
           // gold-threaded metallic edge that catches light as the card tilts
-          background: `conic-gradient(from ${tilt.ry * 8 + 140}deg, ${team.primary}, #ffd75e 18%, ${team.secondary} 42%, #8a6d1f 60%, ${team.primary} 78%, #ffd75e 92%, ${team.primary})`,
+          background: `conic-gradient(from ${tilt.ry * 8 + 140}deg, ${team.primary}, #f5c24b 18%, ${team.secondary} 42%, #6b4e17 60%, ${team.primary} 78%, #f5c24b 92%, ${team.primary})`,
           boxShadow: held
             ? `${-tilt.ry * 1.5}px ${tilt.rx * 1.5 + 24}px 60px rgba(0,0,0,0.55), 0 0 90px ${team.primary}45, 0 0 40px rgba(255,215,94,0.18)`
             : `0 20px 60px rgba(0,0,0,0.5), 0 0 80px ${team.primary}35, 0 0 30px rgba(255,215,94,0.12)`,
@@ -66,7 +66,7 @@ export function FanCardView({ fan }: { fan: FanCard }) {
           <div
             className="absolute inset-0"
             style={{
-              background: `conic-gradient(from ${tilt.ry * 6 + 210}deg at 50% 40%, transparent 0deg, ${team.primary}22 70deg, #ffd75e1f 110deg, #ffffff12 130deg, transparent 190deg, ${team.secondary}1e 280deg, transparent 360deg)`,
+              background: `conic-gradient(from ${tilt.ry * 6 + 210}deg at 50% 40%, transparent 0deg, ${team.primary}22 70deg, #f5c24b1f 110deg, #ffffff12 130deg, transparent 190deg, ${team.secondary}1e 280deg, transparent 360deg)`,
               opacity: held ? 0.95 : 0.55,
               transition: "opacity 300ms ease",
             }}
@@ -88,8 +88,14 @@ export function FanCardView({ fan }: { fan: FanCard }) {
           />
 
           <div className="relative p-7" style={{ transform: "translateZ(30px)" }}>
-            <div className="flex items-start justify-between">
-              <div>
+            <div className="flex items-start gap-4">
+              <span
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border font-display text-xl leading-none"
+                style={{ borderColor: `${team.primary}88`, color: team.primary }}
+              >
+                {team.code.slice(0, 2)}
+              </span>
+              <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-gold">
                   Official Fan Card
                 </p>
@@ -97,38 +103,42 @@ export function FanCardView({ fan }: { fan: FanCard }) {
                   {team.name}
                 </p>
               </div>
-              <span className="text-5xl drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]">
+              <span className="text-4xl drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]">
                 {team.flag}
               </span>
             </div>
 
-            <div className="mt-10 grid grid-cols-2 gap-4">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                <p className="text-[11px] uppercase tracking-widest text-grass">Chants</p>
+            <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-pitch/40 bg-pitch/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-pitch">
+              ✓ Verified fan
+            </span>
+
+            <div className="mt-8 grid grid-cols-3 gap-3">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
+                <p className="text-[10px] uppercase tracking-widest text-grass">Chants</p>
                 <CountUp
                   value={fan.chantCount}
-                  className="score-slant font-display text-4xl tabular-nums"
+                  className="score-slant font-display text-3xl tabular-nums"
                 />
               </div>
-              <div className="rounded-2xl border border-gold/20 bg-gold/[0.05] p-4">
-                <p className="text-[11px] uppercase tracking-widest text-grass">Points</p>
+              <div className="rounded-2xl border border-gold/20 bg-gold/[0.05] p-3.5">
+                <p className="text-[10px] uppercase tracking-widest text-grass">Points</p>
                 <CountUp
                   value={fan.points}
-                  className="score-slant font-display text-4xl tabular-nums text-gold"
+                  className="score-slant font-display text-3xl tabular-nums text-gold"
                 />
               </div>
-            </div>
-
-            <div className="mt-8 flex items-end justify-between">
-              <div>
-                <p className="text-[11px] uppercase tracking-widest text-grass">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
+                <p className="text-[10px] uppercase tracking-widest text-grass">
                   Fan since
                 </p>
-                <p className="font-display text-lg uppercase">
+                <p className="mt-1 font-display text-base uppercase leading-tight">
                   {fanSinceLabel(fan.fanSince)}
                 </p>
               </div>
-              <div className="text-right">
+            </div>
+
+            <div className="mt-7 flex items-end justify-between">
+              <div>
                 <p className="text-[11px] uppercase tracking-widest text-grass">Holder</p>
                 <p className="font-mono text-sm">{shortAddr(fan.owner.toBase58())}</p>
               </div>

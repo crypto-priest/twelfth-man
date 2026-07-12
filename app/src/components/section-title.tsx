@@ -20,7 +20,7 @@ export function SectionTitle({
           )}
         </div>
       )}
-      <h2 className="flex items-center gap-2.5 font-display text-xl uppercase leading-none tracking-wide text-chalk">
+      <h2 className="flex items-center gap-2.5 font-head text-lg font-semibold uppercase leading-none tracking-wide text-chalk">
         <span
           aria-hidden
           className="h-[16px] w-[5px] -skew-x-[14deg] rounded-[1px] bg-gold"

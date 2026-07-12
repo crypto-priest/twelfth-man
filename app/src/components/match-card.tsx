@@ -216,7 +216,7 @@ export function MatchCard({
                   run(() => settlePredictionIx(match.id, publicKey!, fan.team))
                 }
                 disabled={busy}
-                className="ml-auto rounded-full bg-pitch px-5 py-2 text-sm font-semibold text-night transition hover:bg-[#33ff9f] disabled:opacity-40"
+                className="ml-auto rounded-full bg-pitch px-5 py-2 text-sm font-semibold text-night transition hover:bg-pitch-2 disabled:opacity-40"
               >
                 {busy ? "Collecting…" : "Collect my points"}
               </button>
@@ -247,7 +247,7 @@ export function MatchCard({
                 <button
                   onClick={() => run(() => predictIx(publicKey, match.id, home, away))}
                   disabled={busy}
-                  className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-[#33ff9f] disabled:opacity-40"
+                  className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-pitch-2 disabled:opacity-40"
                 >
                   {busy ? "Locking it in…" : `Lock my ${home}–${away} call`}
                 </button>

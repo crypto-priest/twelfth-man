@@ -83,7 +83,7 @@ export default function LeaderboardPage() {
                 className={`grid grid-cols-[3rem_1fr_4.5rem_4.5rem] items-center gap-2 overflow-hidden border-b border-edge/60 px-4 py-3 transition-colors last:border-0 sm:grid-cols-[3.5rem_1fr_5rem_5rem_5rem] ${
                   mine ? "bg-gold/[0.06]" : "hover:bg-white/[0.02]"
                 }`}
-                style={mine ? { boxShadow: "inset 3px 0 0 #ffd75e" } : undefined}
+                style={mine ? { boxShadow: "inset 3px 0 0 #f5c24b" } : undefined}
               >
                 <span
                   className={`score-slant -my-1 font-display tabular-nums leading-none ${
