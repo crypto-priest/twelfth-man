@@ -11,6 +11,7 @@ const links = [
   { href: "/leaderboard", label: "Leaderboard" },
   { href: "/card", label: "My Card" },
   { href: "/#how-it-works", label: "How it works" },
+  { href: "/demo", label: "Try it" },
 ];
 
 export function Nav() {

@@ -39,6 +39,42 @@ cd app
 yarn && yarn dev
 ```
 
+## Testing it yourself
+
+You need the Phantom (or Solflare) browser extension and about 2 minutes.
+The app also has this guide built in, at `/demo`.
+
+1. Flip Phantom into play-money mode: Settings → Developer Settings →
+   Testnet Mode ON. That switches it to Solana's practice network (devnet) —
+   nothing here costs real money.
+
+2. Import a ready-made test account (Phantom → Add / Connect Wallet → Import
+   Recovery Phrase). Both are loaded with 1.5 devnet SOL, and both are
+   **shared public test accounts — devnet only, no real value**:
+
+   Test account A (`31hosojNPTCvzqzsBPkLve95hn4qdmz26dvKnoX4woYe`):
+
+   ```
+   discover hero tent veteran pole denial intact autumn list job finish gown
+   ```
+
+   Test account B (`CKz9PsKMGSQMRLvAaPewXeeddes7Wk2QgRGpbQxSE3Ys`):
+
+   ```
+   arrow kitten raise clip script capital sorry foot vendor twist oxygen rally
+   ```
+
+   One team per account, forever — if the account already has a Fan Card,
+   that step is done; everything else still works. There are two accounts so
+   a second tester can pick a rival team.
+
+   Or use your own wallet: switch it to devnet and grab free practice SOL
+   from [faucet.solana.com](https://faucet.solana.com).
+
+3. The test script: get your Fan Card → post a chant (watch it hit the live
+   wall) → call a score on an upcoming match → check the leaderboard. Results
+   land automatically after full time and points appear on your card.
+
 ## Notes
 
 - Match results are posted by the admin key that ran `initialize`. Fine for a
