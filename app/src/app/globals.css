@@ -8,11 +8,37 @@
 
 body {
   @apply bg-night text-chalk antialiased;
+  /* warm floodlights from the top corners, green wash from the pitch below */
   background-image:
-    radial-gradient(1100px 480px at 12% -8%, rgba(0, 255, 135, 0.09), transparent 60%),
-    radial-gradient(900px 420px at 88% -6%, rgba(0, 255, 135, 0.06), transparent 60%),
-    radial-gradient(1400px 800px at 50% 115%, rgba(0, 90, 50, 0.16), transparent 65%);
+    linear-gradient(112deg, transparent 30%, rgba(255, 240, 200, 0.03) 38%, transparent 46%),
+    linear-gradient(248deg, transparent 30%, rgba(255, 240, 200, 0.025) 38%, transparent 46%),
+    radial-gradient(1100px 500px at 14% -10%, rgba(255, 236, 190, 0.07), transparent 60%),
+    radial-gradient(950px 460px at 86% -8%, rgba(255, 236, 190, 0.05), transparent 60%),
+    radial-gradient(1500px 850px at 50% 118%, rgba(18, 84, 50, 0.28), transparent 65%);
   background-attachment: fixed;
+}
+
+/* vignette + film grain keep it from looking flat */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    130% 100% at 50% 30%,
+    transparent 55%,
+    rgba(2, 8, 5, 0.5) 100%
+  );
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* halfway line + center circle, like looking down at the pitch */
@@ -30,7 +56,7 @@ body {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(rgba(233, 246, 239, 0.05), rgba(233, 246, 239, 0.015));
+  background: linear-gradient(rgba(244, 241, 228, 0.05), rgba(244, 241, 228, 0.015));
 }
 .pitch-lines::after {
   content: "";
@@ -40,25 +66,46 @@ body {
   width: min(56vw, 640px);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(233, 246, 239, 0.04);
+  border: 1px solid rgba(244, 241, 228, 0.04);
   border-radius: 50%;
 }
 
 .panel {
-  @apply rounded-2xl border border-edge bg-panel/80 backdrop-blur-sm;
+  @apply rounded-2xl border border-edge/70 backdrop-blur-md;
+  background:
+    linear-gradient(180deg, rgba(255, 249, 230, 0.045), rgba(255, 249, 230, 0) 40%),
+    rgba(14, 34, 24, 0.72);
+  box-shadow: 0 32px 64px -36px rgba(0, 0, 0, 0.8);
+}
+
+/* Anton only ships one weight — stop the browser faking bolds */
+.font-display {
+  font-weight: 400;
+  font-synthesis: none;
+}
+
+/* broadcast-graphics slant for big scores */
+.score-slant {
+  display: inline-block;
+  transform: skewX(-7deg);
 }
 
 .glow-text {
   text-shadow: 0 0 24px rgba(0, 255, 135, 0.45);
 }
+.glow-gold {
+  text-shadow: 0 0 28px rgba(255, 215, 94, 0.4);
+}
 
-/* broadcast-style live bug */
+/* tv-style live bug: red box, blinking dot */
 .live-bug {
-  @apply inline-flex items-center gap-1.5 rounded bg-pitch px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-night;
+  @apply inline-flex items-center gap-1.5 rounded-[5px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white;
+  background: #d7262c;
+  box-shadow: 0 2px 14px rgba(215, 38, 44, 0.35);
 }
 .live-bug::before {
   content: "";
-  @apply h-1.5 w-1.5 rounded-full bg-night;
+  @apply h-1.5 w-1.5 rounded-full bg-white;
   animation: bug-blink 1.1s ease-in-out infinite;
 }
 @keyframes bug-blink {
@@ -76,16 +123,16 @@ body {
 }
 .lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 44px rgba(0, 255, 135, 0.09);
+  box-shadow: 0 14px 48px rgba(0, 0, 0, 0.45);
 }
 
 .skeleton {
   @apply rounded-lg;
   background: linear-gradient(
     100deg,
-    rgba(233, 246, 239, 0.04) 40%,
-    rgba(233, 246, 239, 0.1) 50%,
-    rgba(233, 246, 239, 0.04) 60%
+    rgba(244, 241, 228, 0.04) 40%,
+    rgba(244, 241, 228, 0.1) 50%,
+    rgba(244, 241, 228, 0.04) 60%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s linear infinite;
@@ -101,10 +148,10 @@ body {
 .wallet-adapter-dropdown-list,
 .wallet-adapter-modal-wrapper {
   @apply !bg-panel !text-chalk;
-  border: 1px solid #12271c;
+  border: 1px solid #203b2a;
 }
 .wallet-adapter-modal-overlay {
-  background: rgba(4, 12, 8, 0.85);
+  background: rgba(3, 10, 7, 0.85);
 }
 .wallet-adapter-modal-button-close {
   @apply !bg-edge;
@@ -114,14 +161,14 @@ body {
 }
 
 ::selection {
-  background: rgba(0, 255, 135, 0.3);
+  background: rgba(255, 215, 94, 0.35);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #12271c;
+  background: #203b2a;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-track {

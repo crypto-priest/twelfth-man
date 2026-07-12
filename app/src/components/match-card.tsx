@@ -11,7 +11,7 @@ import {
   type Prediction,
 } from "@/lib/fanpulse";
 import { getTeam } from "@/lib/teams";
-import { kickoffLabel } from "@/lib/format";
+import { kickoffDay, kickoffTime } from "@/lib/format";
 import type { LiveScore } from "@/hooks/use-live-scores";
 
 function Side({ code, align }: { code: string; align: "left" | "right" }) {
@@ -22,14 +22,29 @@ function Side({ code, align }: { code: string; align: "left" | "right" }) {
         align === "right" ? "flex-row-reverse text-right" : ""
       }`}
     >
-      <span className="text-4xl">{team.flag}</span>
+      <span className="text-4xl drop-shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+        {team.flag}
+      </span>
       <div>
-        <p className="font-display text-2xl font-bold uppercase leading-none tracking-wide">
+        <p className="font-display text-2xl uppercase leading-none tracking-wide">
           {team.code}
         </p>
         <p className="mt-1 text-xs text-grass">{team.name}</p>
       </div>
     </div>
+  );
+}
+
+function Scoreline({ home, away }: { home: number; away: number }) {
+  return (
+    <span
+      key={`${home}-${away}`}
+      className="score-slant animate-score-pop rounded-lg border border-edge/70 bg-night/70 px-4 py-1 font-display text-4xl tabular-nums tracking-tight sm:text-5xl"
+    >
+      {home}
+      <span className="mx-1.5 text-grass">–</span>
+      {away}
+    </span>
   );
 }
 
@@ -53,7 +68,7 @@ function Stepper({
         >
           −
         </button>
-        <span className="w-12 text-center font-display text-4xl font-bold tabular-nums">
+        <span className="w-12 text-center font-display text-4xl tabular-nums">
           {value}
         </span>
         <button
@@ -108,67 +123,59 @@ export function MatchCard({
   }
 
   return (
-    <article className="panel overflow-hidden animate-slide-up">
-      <div className="flex items-center justify-between gap-2 border-b border-edge px-5 py-2.5 text-xs">
-        <span className="uppercase tracking-widest text-grass">
-          Match #{match.id}
+    <article className="panel relative overflow-hidden animate-slide-up">
+      {/* oversized programme number ghosted behind the fixture */}
+      <span
+        aria-hidden
+        className="score-slant pointer-events-none absolute -right-3 -top-7 select-none font-display text-[110px] leading-none text-chalk/[0.045]"
+      >
+        {String(match.id).padStart(2, "0")}
+      </span>
+
+      <div className="flex items-center justify-between gap-2 border-b border-edge/70 bg-gradient-to-r from-white/[0.04] to-transparent px-5 py-2.5 text-xs">
+        <span className="font-display text-sm uppercase tracking-wider text-grass">
+          Match {String(match.id).padStart(2, "0")}
         </span>
         {match.settled ? (
-          <span className="font-bold uppercase tracking-widest text-chalk">
+          <span className="rounded-[5px] bg-chalk/10 px-2 py-0.5 font-bold uppercase tracking-[0.18em] text-chalk">
             Full time
           </span>
         ) : inPlay ? (
-          <span className="flex items-center gap-1.5 font-bold uppercase tracking-widest text-pitch">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inset-0 rounded-full bg-pitch animate-pulse-ring" />
-              <span className="relative h-1.5 w-1.5 rounded-full bg-pitch" />
-            </span>
+          <span className="flex items-center gap-2 font-bold uppercase tracking-widest text-chalk">
+            <span className="live-bug">Live</span>
             {liveNow
-              ? `Live · ${live.clock}`
+              ? live.clock
               : live?.state === "post"
                 ? "Full time — result on its way"
                 : "Waiting for the final score"}
           </span>
         ) : (
-          <span className="text-grass">Kicks off {kickoffLabel(match.kickoffTs)}</span>
+          <span className="uppercase tracking-widest text-grass">
+            {kickoffDay(match.kickoffTs)} ·{" "}
+            <span className="font-bold text-gold">{kickoffTime(match.kickoffTs)}</span>
+          </span>
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-4 px-5 py-5">
+      <div className="relative flex items-center justify-between gap-4 px-5 py-5">
         <Side code={match.home} align="left" />
-        {match.settled || inPlay ? (
-          <div className="font-display text-5xl font-bold tabular-nums tracking-tight">
-            {match.settled ? (
-              <span
-                key={`${match.homeScore}-${match.awayScore}`}
-                className="inline-block animate-score-pop"
-              >
-                {match.homeScore}
-                <span className="mx-1 text-grass">–</span>
-                {match.awayScore}
-              </span>
-            ) : live && live.state !== "pre" ? (
-              <span
-                key={`${live.homeScore}-${live.awayScore}`}
-                className="inline-block animate-score-pop"
-              >
-                {live.homeScore}
-                <span className="mx-1 text-grass">–</span>
-                {live.awayScore}
-              </span>
-            ) : (
-              <span className="text-grass">·</span>
-            )}
-          </div>
+        {match.settled ? (
+          <Scoreline home={match.homeScore} away={match.awayScore} />
+        ) : inPlay ? (
+          live && live.state !== "pre" ? (
+            <Scoreline home={live.homeScore} away={live.awayScore} />
+          ) : (
+            <span className="font-display text-4xl text-grass">·</span>
+          )
         ) : (
-          <span className="font-display text-2xl font-semibold uppercase text-grass">
+          <span className="score-slant font-display text-2xl uppercase text-grass/70">
             vs
           </span>
         )}
         <Side code={match.away} align="right" />
       </div>
 
-      <div className="border-t border-edge bg-night/40 px-5 py-4">
+      <div className="relative border-t border-edge/70 bg-night/40 px-5 py-4">
         {prediction ? (
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <div>
@@ -181,7 +188,7 @@ export function MatchCard({
                   minute: "2-digit",
                 })}
               </p>
-              <p className="font-display text-3xl font-bold tabular-nums">
+              <p className="score-slant font-display text-3xl tabular-nums">
                 {prediction.homeScore}
                 <span className="mx-1 text-grass">–</span>
                 {prediction.awayScore}
@@ -189,11 +196,11 @@ export function MatchCard({
             </div>
             {prediction.settled ? (
               <span
-                className={`ml-auto rounded-full px-4 py-1.5 text-sm font-bold ${
+                className={`ml-auto -rotate-1 rounded-full px-4 py-1.5 text-sm font-bold ${
                   prediction.points === 3
-                    ? "bg-pitch/15 text-pitch"
+                    ? "bg-gold/15 text-gold"
                     : prediction.points === 1
-                      ? "bg-amber-400/15 text-amber-300"
+                      ? "bg-gold/10 text-gold/80"
                       : "bg-white/5 text-grass"
                 }`}
               >

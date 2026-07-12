@@ -68,7 +68,7 @@ function Step({ n, title, children }: { n: number; title: string; children: Reac
   return (
     <section className="panel p-5">
       <div className="flex items-center gap-3">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-pitch/10 font-display text-base font-bold text-pitch">
+        <span className="flex h-7 w-7 shrink-0 -rotate-3 items-center justify-center rounded-[7px] bg-gold/15 font-display text-base text-gold">
           {n}
         </span>
         <h2 className="font-semibold">{title}</h2>
@@ -82,7 +82,7 @@ export default function DemoPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-5">
       <header>
-        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
+        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
           Take it for a spin
         </h1>
         <p className="mt-1 text-grass">

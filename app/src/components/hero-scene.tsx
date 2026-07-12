@@ -58,7 +58,7 @@ function Ball() {
   );
 }
 
-const PALETTE = ["#00ff87", "#75aadb", "#ffdc02", "#e30613", "#ffffff", "#f36c21"];
+const PALETTE = ["#ffd75e", "#00ff87", "#75aadb", "#ffd75e", "#e30613", "#fff4dd", "#f36c21", "#ffd75e"];
 
 function Crowd() {
   const points = useRef<THREE.Points>(null);
@@ -134,9 +134,9 @@ function Floodlight({ position, target }: { position: [number, number, number]; 
     <mesh ref={cone} position={position} quaternion={dir}>
       <coneGeometry args={[1.6, 9, 24, 1, true]} />
       <meshBasicMaterial
-        color="#bfffe0"
+        color="#ffe9b8"
         transparent
-        opacity={0.045}
+        opacity={0.05}
         side={THREE.DoubleSide}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -162,9 +162,10 @@ export default function HeroScene() {
         gl={{ antialias: true, alpha: true, failIfMajorPerformanceCaveat: false }}
         style={{ background: "transparent" }}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[4, 6, 3]} intensity={1.6} color="#f0fff8" />
-        <pointLight position={[-5, -2, 2]} intensity={1.2} color="#00ff87" />
+        <ambientLight intensity={0.45} />
+        <directionalLight position={[4, 6, 3]} intensity={1.7} color="#fff2d6" />
+        <pointLight position={[-5, -2, 2]} intensity={1.1} color="#ffd75e" />
+        <pointLight position={[5, 1, 3]} intensity={0.5} color="#00ff87" />
         <Ball />
         <Crowd />
         <Floodlight position={[-4.5, 5.5, -1]} target={[0, 0, 0]} />

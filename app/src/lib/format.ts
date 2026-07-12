@@ -8,11 +8,16 @@ export function timeAgo(ts: number): string {
   return `${Math.floor(h / 24)}d ago`;
 }
 
-export function kickoffLabel(ts: number): string {
-  return new Date(ts * 1000).toLocaleString(undefined, {
+export function kickoffDay(ts: number): string {
+  return new Date(ts * 1000).toLocaleDateString(undefined, {
     weekday: "short",
-    month: "short",
     day: "numeric",
+    month: "short",
+  });
+}
+
+export function kickoffTime(ts: number): string {
+  return new Date(ts * 1000).toLocaleTimeString(undefined, {
     hour: "2-digit",
     minute: "2-digit",
   });

@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
+import { Anton, Instrument_Sans } from "next/font/google";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Nav } from "@/components/nav";
 
-const display = Barlow_Condensed({
+const display = Anton({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
   variable: "--font-display",
 });
 
-const body = Inter({ subsets: ["latin"], variable: "--font-body" });
+const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "12th Man — every team has eleven. You're the twelfth.",

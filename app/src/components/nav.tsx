@@ -25,8 +25,8 @@ export function Nav() {
             <span className="absolute inset-0 rounded-full bg-pitch animate-pulse-ring" />
             <span className="relative rounded-full h-2.5 w-2.5 bg-pitch" />
           </span>
-          <span className="font-display text-2xl font-bold uppercase tracking-wider">
-            <span className="text-pitch">12</span>th Man
+          <span className="font-display text-2xl uppercase tracking-wide">
+            <span className="text-gold">12</span>th Man
           </span>
         </Link>
 

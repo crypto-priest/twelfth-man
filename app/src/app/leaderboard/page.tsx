@@ -9,7 +9,7 @@ import { CountUp } from "@/components/count-up";
 import { EmptyState } from "@/components/empty-state";
 import { StartBanner } from "@/components/start-banner";
 
-const rankColors = ["text-yellow-400", "text-slate-300", "text-amber-600"];
+const rankColors = ["text-gold", "text-[#cfd8cf]", "text-[#d8925a]"];
 
 export default function LeaderboardPage() {
   const stats = useTeamStats();
@@ -32,9 +32,9 @@ export default function LeaderboardPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <header>
-        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
+        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
           Loudest fanbases
-          <span className="text-pitch glow-text"> on the planet</span>
+          <span className="text-gold glow-gold"> on the planet</span>
         </h1>
         <p className="mt-1 text-grass">
           Countries ranked by chants, then prediction points, then fan count.
@@ -80,20 +80,20 @@ export default function LeaderboardPage() {
                 key={t.code}
                 layout
                 transition={{ type: "spring", stiffness: 350, damping: 32 }}
-                className={`grid grid-cols-[3rem_1fr_4.5rem_4.5rem] items-center gap-2 border-b border-edge/60 px-4 py-3 transition-colors last:border-0 sm:grid-cols-[3.5rem_1fr_5rem_5rem_5rem] ${
-                  mine ? "bg-pitch/[0.07]" : "hover:bg-white/[0.02]"
+                className={`grid grid-cols-[3rem_1fr_4.5rem_4.5rem] items-center gap-2 overflow-hidden border-b border-edge/60 px-4 py-3 transition-colors last:border-0 sm:grid-cols-[3.5rem_1fr_5rem_5rem_5rem] ${
+                  mine ? "bg-gold/[0.06]" : "hover:bg-white/[0.02]"
                 }`}
-                style={mine ? { boxShadow: "inset 3px 0 0 #00ff87" } : undefined}
+                style={mine ? { boxShadow: "inset 3px 0 0 #ffd75e" } : undefined}
               >
                 <span
-                  className={`font-display text-2xl font-bold tabular-nums ${
-                    rankColors[i] ?? "text-grass"
-                  }`}
+                  className={`score-slant -my-1 font-display tabular-nums leading-none ${
+                    i < 3 ? "text-4xl" : "text-2xl"
+                  } ${rankColors[i] ?? "text-grass/70"}`}
                 >
                   {i + 1}
                   {move !== 0 && (
                     <span
-                      className={`ml-1 align-middle text-xs ${
+                      className={`ml-1 align-middle font-sans text-xs ${
                         move > 0 ? "text-pitch" : "text-red-400"
                       }`}
                     >
@@ -103,11 +103,11 @@ export default function LeaderboardPage() {
                 </span>
                 <span className="flex min-w-0 items-center gap-2.5">
                   <span className="text-2xl">{team.flag}</span>
-                  <span className="truncate font-display text-xl font-semibold uppercase tracking-wide">
+                  <span className="truncate font-display text-xl uppercase tracking-wide">
                     {team.name}
                   </span>
                   {mine && (
-                    <span className="rounded-full bg-pitch/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-pitch">
+                    <span className="-rotate-2 rounded-[5px] bg-gold px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-night">
                       You
                     </span>
                   )}
@@ -118,11 +118,11 @@ export default function LeaderboardPage() {
                 />
                 <CountUp
                   value={t.chantCount}
-                  className="text-right font-display text-xl font-bold tabular-nums"
+                  className="text-right font-display text-xl tabular-nums"
                 />
                 <CountUp
                   value={t.points}
-                  className="text-right font-display text-xl font-bold tabular-nums text-pitch"
+                  className="text-right font-display text-xl tabular-nums text-gold"
                 />
               </motion.div>
             );

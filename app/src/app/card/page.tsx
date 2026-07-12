@@ -13,7 +13,7 @@ export default function CardPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <header>
-        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
+        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
           Your Fan Card
         </h1>
         <p className="mt-1 text-grass">

@@ -5,12 +5,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        night: "#050f0a",
-        panel: "#0a1a12",
-        edge: "#12271c",
+        night: "#081711",
+        panel: "#0e2218",
+        edge: "#203b2a",
         pitch: "#00ff87",
-        chalk: "#e9f6ef",
-        grass: "#7fa892",
+        gold: "#ffd75e",
+        chalk: "#f4f1e4",
+        grass: "#94ab9a",
       },
       fontFamily: {
         display: ["var(--font-display)"],

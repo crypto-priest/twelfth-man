@@ -17,7 +17,7 @@ export function ChantCard({ chant }: { chant: FeedChant }) {
       style={
         isMatchDay
           ? {
-              backgroundImage: `linear-gradient(#0a1a12, #0a1a12), linear-gradient(120deg, ${team.primary}, ${team.secondary})`,
+              backgroundImage: `linear-gradient(#0e2218, #0e2218), linear-gradient(120deg, ${team.primary}, #ffd75e66, ${team.secondary})`,
               backgroundOrigin: "border-box",
               backgroundClip: "padding-box, border-box",
               border: "1px solid transparent",
@@ -37,21 +37,13 @@ export function ChantCard({ chant }: { chant: FeedChant }) {
         <TeamBadge code={chant.team} />
         {isMatchDay && (
           <span
-            className="rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-widest"
+            className="-rotate-2 rounded-[6px] px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-widest"
             style={{ background: `${team.primary}26`, color: team.primary }}
           >
             Match-day chant · #{chant.matchId}
           </span>
         )}
-        {chant.live && (
-          <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-pitch">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inset-0 rounded-full bg-pitch animate-pulse-ring" />
-              <span className="relative h-1.5 w-1.5 rounded-full bg-pitch" />
-            </span>
-            Live
-          </span>
-        )}
+        {chant.live && <span className="live-bug">Live</span>}
         <span className="ml-auto text-xs text-grass">{timeAgo(chant.timestamp)}</span>
       </div>
       <p className="relative mt-3 text-[15px] leading-relaxed">{chant.text}</p>

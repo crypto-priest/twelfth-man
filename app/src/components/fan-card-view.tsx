@@ -41,12 +41,13 @@ export function FanCardView({ fan }: { fan: FanCard }) {
     >
       <div
         ref={card}
-        className="relative overflow-hidden rounded-3xl p-[1.5px]"
+        className="relative overflow-hidden rounded-3xl p-[2px]"
         style={{
-          background: `linear-gradient(160deg, ${team.primary}, ${team.secondary})`,
+          // gold-threaded metallic edge that catches light as the card tilts
+          background: `conic-gradient(from ${tilt.ry * 8 + 140}deg, ${team.primary}, #ffd75e 18%, ${team.secondary} 42%, #8a6d1f 60%, ${team.primary} 78%, #ffd75e 92%, ${team.primary})`,
           boxShadow: held
-            ? `${-tilt.ry * 1.5}px ${tilt.rx * 1.5 + 24}px 60px rgba(0,0,0,0.55), 0 0 90px ${team.primary}55`
-            : `0 20px 60px rgba(0,0,0,0.5), 0 0 80px ${team.primary}40`,
+            ? `${-tilt.ry * 1.5}px ${tilt.rx * 1.5 + 24}px 60px rgba(0,0,0,0.55), 0 0 90px ${team.primary}45, 0 0 40px rgba(255,215,94,0.18)`
+            : `0 20px 60px rgba(0,0,0,0.5), 0 0 80px ${team.primary}35, 0 0 30px rgba(255,215,94,0.12)`,
           transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) scale(${held ? 1.03 : 1})`,
           transformStyle: "preserve-3d",
           transition: held
@@ -54,7 +55,7 @@ export function FanCardView({ fan }: { fan: FanCard }) {
             : "transform 600ms cubic-bezier(0.2, 0.9, 0.3, 1.15), box-shadow 600ms ease",
         }}
       >
-        <div className="relative overflow-hidden rounded-[calc(1.5rem-1.5px)] bg-night">
+        <div className="relative overflow-hidden rounded-[calc(1.5rem-2px)] bg-night">
           <div
             className="absolute inset-0"
             style={{
@@ -65,8 +66,8 @@ export function FanCardView({ fan }: { fan: FanCard }) {
           <div
             className="absolute inset-0"
             style={{
-              background: `conic-gradient(from ${tilt.ry * 6 + 210}deg at 50% 40%, transparent 0deg, ${team.primary}22 80deg, #ffffff14 120deg, transparent 180deg, ${team.secondary}1e 280deg, transparent 360deg)`,
-              opacity: held ? 0.9 : 0.5,
+              background: `conic-gradient(from ${tilt.ry * 6 + 210}deg at 50% 40%, transparent 0deg, ${team.primary}22 70deg, #ffd75e1f 110deg, #ffffff12 130deg, transparent 190deg, ${team.secondary}1e 280deg, transparent 360deg)`,
+              opacity: held ? 0.95 : 0.55,
               transition: "opacity 300ms ease",
             }}
           />
@@ -89,13 +90,10 @@ export function FanCardView({ fan }: { fan: FanCard }) {
           <div className="relative p-7" style={{ transform: "translateZ(30px)" }}>
             <div className="flex items-start justify-between">
               <div>
-                <p
-                  className="text-[11px] font-bold uppercase tracking-[0.25em]"
-                  style={{ color: team.primary }}
-                >
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-gold">
                   Official Fan Card
                 </p>
-                <p className="mt-1 font-display text-4xl font-bold uppercase leading-none tracking-wide">
+                <p className="mt-1 font-display text-4xl uppercase leading-none tracking-wide">
                   {team.name}
                 </p>
               </div>
@@ -109,14 +107,14 @@ export function FanCardView({ fan }: { fan: FanCard }) {
                 <p className="text-[11px] uppercase tracking-widest text-grass">Chants</p>
                 <CountUp
                   value={fan.chantCount}
-                  className="font-display text-4xl font-bold tabular-nums"
+                  className="score-slant font-display text-4xl tabular-nums"
                 />
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <div className="rounded-2xl border border-gold/20 bg-gold/[0.05] p-4">
                 <p className="text-[11px] uppercase tracking-widest text-grass">Points</p>
                 <CountUp
                   value={fan.points}
-                  className="font-display text-4xl font-bold tabular-nums text-pitch"
+                  className="score-slant font-display text-4xl tabular-nums text-gold"
                 />
               </div>
             </div>
@@ -126,7 +124,7 @@ export function FanCardView({ fan }: { fan: FanCard }) {
                 <p className="text-[11px] uppercase tracking-widest text-grass">
                   Fan since
                 </p>
-                <p className="font-display text-lg font-semibold uppercase">
+                <p className="font-display text-lg uppercase">
                   {fanSinceLabel(fan.fanSince)}
                 </p>
               </div>
@@ -137,8 +135,8 @@ export function FanCardView({ fan }: { fan: FanCard }) {
             </div>
 
             <div className="mt-7 flex items-center justify-between border-t border-white/10 pt-4">
-              <span className="font-display text-sm font-bold uppercase tracking-wider">
-                <span className="text-pitch">12</span>th Man
+              <span className="font-display text-sm uppercase tracking-wider">
+                <span className="text-gold">12</span>th Man
               </span>
               <span className="text-[11px] uppercase tracking-widest text-grass">
                 World Cup 2026

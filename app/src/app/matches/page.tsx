@@ -24,7 +24,7 @@ export default function MatchesPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <header>
-        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
+        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
           Matches
         </h1>
         <p className="mt-1 text-grass">
@@ -56,7 +56,9 @@ export default function MatchesPage() {
         <>
           {fixtures.length > 0 && (
             <section className="space-y-4">
-              <SectionTitle live>Up next — make your call</SectionTitle>
+              <SectionTitle live kicker="Fixtures">
+                Up next — make your call
+              </SectionTitle>
               {fixtures.map((m) => (
                 <MatchCard
                   key={m.id}
@@ -72,7 +74,7 @@ export default function MatchesPage() {
 
           {finished.length > 0 && (
             <section className="space-y-4 border-t border-edge pt-8">
-              <SectionTitle>Finished — final scores</SectionTitle>
+              <SectionTitle kicker="Results">Finished — final scores</SectionTitle>
               {finished.map((m) => (
                 <MatchCard
                   key={m.id}

@@ -60,22 +60,22 @@ function MiniBoard({ stats, myTeam }: { stats: TeamStats[] | null; myTeam?: stri
           <div
             key={t.code}
             className={`flex items-center gap-3 border-b border-edge/60 px-4 py-2.5 last:border-0 ${
-              mine ? "bg-pitch/[0.07]" : ""
+              mine ? "bg-gold/[0.06]" : ""
             }`}
-            style={mine ? { boxShadow: "inset 3px 0 0 #00ff87" } : undefined}
+            style={mine ? { boxShadow: "inset 3px 0 0 #ffd75e" } : undefined}
           >
-            <span className="w-6 text-center font-display text-lg font-bold text-grass">
+            <span className="w-6 text-center font-display text-lg text-grass">
               {medals[i] ?? i + 1}
             </span>
             <span className="text-xl">{team.flag}</span>
             <span className="min-w-0 flex-1 truncate text-sm font-semibold">
               {team.name}
-              {mine && <span className="ml-2 text-xs font-bold text-pitch">You</span>}
+              {mine && <span className="ml-2 text-xs font-bold text-gold">You</span>}
             </span>
             <span className="text-sm tabular-nums text-grass">
               {t.chantCount.toLocaleString()} chants
             </span>
-            <span className="w-14 text-right font-display text-lg font-bold tabular-nums text-pitch">
+            <span className="score-slant w-14 text-right font-display text-lg tabular-nums text-gold">
               {t.points.toLocaleString()}
             </span>
           </div>
@@ -104,11 +104,14 @@ function PersonalStrip({ fan }: { fan: FanCard }) {
         <p className="text-xs text-grass">Tap to see your full Fan Card</p>
       </div>
       <div className="text-right">
-        <CountUp value={fan.points} className="font-display text-2xl font-bold text-pitch" />
+        <CountUp
+          value={fan.points}
+          className="score-slant font-display text-2xl text-gold"
+        />
         <p className="text-[11px] uppercase tracking-widest text-grass">Points</p>
       </div>
       <div className="text-right">
-        <CountUp value={fan.chantCount} className="font-display text-2xl font-bold" />
+        <CountUp value={fan.chantCount} className="score-slant font-display text-2xl" />
         <p className="text-[11px] uppercase tracking-widest text-grass">Chants</p>
       </div>
     </Link>
@@ -157,7 +160,9 @@ export default function Home() {
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <section className="space-y-4 lg:col-start-1">
             <div className="flex items-end justify-between">
-              <SectionTitle live>Today&apos;s matches — make your call</SectionTitle>
+              <SectionTitle live kicker="Matchday">
+                Today&apos;s matches — make your call
+              </SectionTitle>
               <Link
                 href="/matches"
                 className="text-sm text-pitch underline-offset-4 hover:underline"
@@ -188,7 +193,7 @@ export default function Home() {
           </section>
 
           <section className="space-y-4 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-            <SectionTitle>Get loud for your team</SectionTitle>
+            <SectionTitle kicker="The wall">Get loud for your team</SectionTitle>
             {fan && (
               <ComposeBox
                 fan={fan}
@@ -200,7 +205,7 @@ export default function Home() {
           </section>
 
           <section className="space-y-4 lg:col-start-1">
-            <SectionTitle>Loudest fanbases</SectionTitle>
+            <SectionTitle kicker="World table">Loudest fanbases</SectionTitle>
             <MiniBoard stats={stats} myTeam={fan?.team} />
           </section>
         </div>
@@ -219,13 +224,13 @@ export default function Home() {
         )}
 
         <div className="relative max-w-xl pt-4">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-pitch">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
             World Cup 2026
           </p>
-          <h1 className="mt-3 font-display text-6xl font-bold uppercase leading-none tracking-tight sm:text-7xl">
-            <span className="text-pitch glow-text">12</span>th Man
+          <h1 className="mt-3 font-display text-6xl uppercase leading-none tracking-tight sm:text-7xl">
+            <span className="text-gold glow-gold">12</span>th Man
           </h1>
-          <p className="mt-2 font-display text-xl font-semibold uppercase tracking-wide text-chalk">
+          <p className="mt-2 font-display text-xl uppercase tracking-wide text-chalk">
             Every team has eleven. You&apos;re the twelfth.
           </p>
           <p className="mt-4 text-grass">
@@ -241,8 +246,8 @@ export default function Home() {
             return (
               <div key={s.title} className="panel lift flex items-start gap-3 p-4">
                 <span
-                  className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-display text-base font-bold ${
-                    done ? "bg-pitch text-night" : "bg-pitch/10 text-pitch"
+                  className={`mt-0.5 flex h-7 w-7 shrink-0 -rotate-3 items-center justify-center rounded-[7px] font-display text-base ${
+                    done ? "bg-pitch text-night" : "bg-gold/15 text-gold"
                   }`}
                 >
                   {done ? "✓" : i + 1}
@@ -304,7 +309,9 @@ export default function Home() {
       </section>
 
       <section>
-        <SectionTitle live>Loudest fanbases right now</SectionTitle>
+        <SectionTitle live kicker="World table">
+          Loudest fanbases right now
+        </SectionTitle>
         <div className="mt-4 max-w-2xl">
           <MiniBoard stats={stats} />
         </div>

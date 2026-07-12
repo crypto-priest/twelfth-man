@@ -28,7 +28,7 @@ export default function ChantsPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <header>
-        <h1 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl">
+        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
           The Chant Wall
         </h1>
         <p className="mt-1 text-grass">
