@@ -34,7 +34,7 @@ export function StartBanner({
       {connected ? (
         <Link
           href="/card"
-          className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-chalk transition hover:bg-pitch-2"
+          className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-pitch-2"
         >
           Get my Fan Card
         </Link>

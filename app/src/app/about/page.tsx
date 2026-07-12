@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SectionTitle } from "@/components/section-title";
+import { PageHeader } from "@/components/page-header";
 
 const things = [
   {
@@ -35,17 +36,18 @@ const things = [
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-10">
-      <header>
-        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
-          What is <span className="text-gold">12</span>th Man?
-        </h1>
-        <p className="mt-3 text-grass">
+      <PageHeader
+        kicker="The idea"
+        title="What is 12th Man?"
+      />
+      <div className="-mt-4 text-center">
+        <p className="mx-auto max-w-xl text-grass">
           Every team has eleven players. The twelfth is the crowd, and that&apos;s
           you. This is where World Cup fans back their team, cheer, and call
           the scores. Everything you do here is saved permanently, so your
           support and your predictions are provable, forever.
         </p>
-      </header>
+      </div>
 
       <section className="space-y-4">
         <SectionTitle kicker="The game">What can I do here?</SectionTitle>
@@ -109,7 +111,7 @@ export default function AboutPage() {
       <div className="flex flex-wrap gap-3 pt-2">
         <Link
           href="/demo"
-          className="rounded-full bg-pitch px-7 py-3 font-semibold text-chalk transition hover:bg-pitch-2"
+          className="rounded-full bg-pitch px-7 py-3 font-semibold text-night transition hover:bg-pitch-2"
         >
           Try the demo
         </Link>

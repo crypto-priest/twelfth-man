@@ -7,6 +7,7 @@ import { MatchCard } from "@/components/match-card";
 import { EmptyState } from "@/components/empty-state";
 import { SectionTitle } from "@/components/section-title";
 import { StartBanner } from "@/components/start-banner";
+import { PageHeader } from "@/components/page-header";
 
 export default function MatchesPage() {
   const { matches, predictions, refresh } = useMatches();
@@ -23,15 +24,11 @@ export default function MatchesPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
-      <header>
-        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
-          Matches
-        </h1>
-        <p className="mt-1 text-grass">
-          Call the score before kickoff. Nail the exact score: 3 pts. Call the
-          right result: 1 pt.
-        </p>
-      </header>
+      <PageHeader
+        kicker="Fixtures and results"
+        title="Matches"
+        sub="Call the score before kickoff. Nail the exact score: 3 pts. Call the right result: 1 pt."
+      />
 
       <StartBanner
         connected={connected}

@@ -50,8 +50,8 @@ export function getTeam(code: string): Team {
       code,
       name: code,
       flag: "🏳️",
-      primary: "#00FF87",
-      secondary: "#FFFFFF",
+      primary: "#7FA0AE",
+      secondary: "#E8EAE8",
     }
   );
 }

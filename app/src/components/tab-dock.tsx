@@ -52,7 +52,7 @@ export function TabDock() {
 
   return (
     <nav
-      className="fixed bottom-3 left-1/2 z-50 flex w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 items-center justify-between gap-1 rounded-[32px] border border-edge-soft bg-[#2E3944CC] px-2 py-2 shadow-[0_18px_50px_rgba(0,0,0,0.55)] backdrop-blur-xl md:hidden"
+      className="fixed bottom-3 left-1/2 z-50 flex w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 items-center justify-between gap-1 rounded-[32px] border border-edge-soft bg-[#1D2124CC] px-2 py-2 shadow-[0_18px_50px_rgba(0,0,0,0.55)] backdrop-blur-xl md:hidden"
       aria-label="primary"
     >
       {tabs.map((t) => {
@@ -62,7 +62,7 @@ export function TabDock() {
             key={t.href}
             href={t.href}
             className={`flex flex-1 flex-col items-center gap-0.5 rounded-3xl px-2 py-1.5 transition ${
-              active ? "bg-pitch text-chalk" : "text-grass hover:text-chalk"
+              active ? "bg-pitch text-night" : "text-grass hover:text-chalk"
             }`}
           >
             <svg

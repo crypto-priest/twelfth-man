@@ -55,7 +55,7 @@ export function FanCardView({ fan }: { fan: FanCard }) {
             : "transform 600ms cubic-bezier(0.2, 0.9, 0.3, 1.15), box-shadow 600ms ease",
         }}
       >
-        <div className="relative overflow-hidden rounded-[calc(1.5rem-2px)] bg-[#1A2228] text-[#D3D9D4]">
+        <div className="relative overflow-hidden rounded-[calc(1.5rem-2px)] bg-[#101214] text-[#E8EAE8]">
           <div
             className="absolute inset-0"
             style={{
@@ -96,7 +96,7 @@ export function FanCardView({ fan }: { fan: FanCard }) {
                 {team.code.slice(0, 2)}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#82B4CD]">
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9FBECB]">
                   Official Fan Card
                 </p>
                 <p className="mt-1 font-display text-4xl uppercase leading-none tracking-wide">
@@ -108,27 +108,27 @@ export function FanCardView({ fan }: { fan: FanCard }) {
               </span>
             </div>
 
-            <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-[#82B4CD]/40 bg-[#82B4CD]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#82B4CD]">
+            <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-[#9FBECB]/40 bg-[#9FBECB]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#9FBECB]">
               ✓ Verified fan
             </span>
 
             <div className="mt-8 grid grid-cols-3 gap-3">
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
-                <p className="text-[10px] uppercase tracking-widest text-[#A9BAC0]">Chants</p>
+                <p className="text-[10px] uppercase tracking-widest text-[#9AA4A4]">Chants</p>
                 <CountUp
                   value={fan.chantCount}
                   className="score-slant font-display text-3xl tabular-nums"
                 />
               </div>
-              <div className="rounded-2xl border border-[#82B4CD]/20 bg-[#82B4CD]/[0.07] p-3.5">
-                <p className="text-[10px] uppercase tracking-widest text-[#A9BAC0]">Points</p>
+              <div className="rounded-2xl border border-[#9FBECB]/20 bg-[#9FBECB]/[0.07] p-3.5">
+                <p className="text-[10px] uppercase tracking-widest text-[#9AA4A4]">Points</p>
                 <CountUp
                   value={fan.points}
-                  className="score-slant font-display text-3xl tabular-nums text-[#82B4CD]"
+                  className="score-slant font-display text-3xl tabular-nums text-[#9FBECB]"
                 />
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
-                <p className="text-[10px] uppercase tracking-widest text-[#A9BAC0]">
+                <p className="text-[10px] uppercase tracking-widest text-[#9AA4A4]">
                   Fan since
                 </p>
                 <p className="mt-1 font-display text-base uppercase leading-tight">
@@ -139,16 +139,16 @@ export function FanCardView({ fan }: { fan: FanCard }) {
 
             <div className="mt-7 flex items-end justify-between">
               <div>
-                <p className="text-[11px] uppercase tracking-widest text-[#A9BAC0]">Holder</p>
+                <p className="text-[11px] uppercase tracking-widest text-[#9AA4A4]">Holder</p>
                 <p className="font-mono text-sm">{shortAddr(fan.owner.toBase58())}</p>
               </div>
             </div>
 
             <div className="mt-7 flex items-center justify-between border-t border-white/10 pt-4">
               <span className="font-display text-sm uppercase tracking-wider">
-                <span className="text-[#82B4CD]">12</span>th Man
+                <span className="text-[#9FBECB]">12</span>th Man
               </span>
-              <span className="text-[11px] uppercase tracking-widest text-[#A9BAC0]">
+              <span className="text-[11px] uppercase tracking-widest text-[#9AA4A4]">
                 World Cup 2026
               </span>
             </div>

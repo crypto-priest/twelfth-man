@@ -11,9 +11,7 @@ const links = [
   { href: "/matches", label: "Matches" },
   { href: "/leaderboard", label: "Leaderboard" },
   { href: "/card", label: "My Card" },
-  { href: "/#how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
-  { href: "/demo", label: "Try it" },
 ];
 
 export function Nav() {
@@ -36,17 +34,12 @@ export function Nav() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="flex flex-col items-center leading-none" aria-hidden>
-            <span className="font-display text-lg leading-none tracking-tight">
-              XII
-            </span>
-            <span className="text-[6.5px] font-bold uppercase tracking-[0.34em] text-muted">
-              Man
-            </span>
+        <Link href="/" aria-label="12th Man, home" className="flex flex-col items-center leading-none">
+          <span className="font-display text-2xl leading-none tracking-tight">
+            XII
           </span>
-          <span className="font-display text-xl uppercase leading-none tracking-tight">
-            12th Man
+          <span className="text-[8px] font-bold uppercase tracking-[0.34em] text-muted">
+            Man
           </span>
         </Link>
 
@@ -55,10 +48,10 @@ export function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className={`rounded-full px-3.5 py-1.5 text-sm transition-colors ${
+              className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${
                 pathname === l.href
-                  ? "bg-pitch/40 text-gold"
-                  : "text-grass hover:text-chalk"
+                  ? "bg-pitch text-night"
+                  : "text-[#C7CDCB] hover:text-chalk"
               }`}
             >
               {l.label}

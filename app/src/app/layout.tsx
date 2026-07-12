@@ -25,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="font-sans">
+        <div className="atmo" aria-hidden />
         <div className="pitch-lines" />
         <Providers>
           <Nav />
@@ -32,8 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <footer className="mx-auto w-full max-w-6xl px-4 pb-28 sm:px-6 md:pb-10">
-            <div className="border-t border-edge pt-6 text-center">
-              <p className="text-xs text-grass">
+            <div className="border-t border-edge-soft pt-6 text-center">
+              <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-muted">
+                12th Man
+              </p>
+              <p className="mt-2 text-xs text-grass">
                 Every cheer and prediction is a real Solana transaction:
                 permanent, provable, yours.
               </p>

@@ -8,6 +8,7 @@ import { getTeam } from "@/lib/teams";
 import { CountUp } from "@/components/count-up";
 import { EmptyState } from "@/components/empty-state";
 import { StartBanner } from "@/components/start-banner";
+import { PageHeader } from "@/components/page-header";
 
 const rankColors = ["text-gold", "text-[#cfd8cf]", "text-[#d8925a]"];
 
@@ -31,16 +32,11 @@ export default function LeaderboardPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <header>
-        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
-          Loudest fanbases
-          <span className="text-gold glow-gold"> on the planet</span>
-        </h1>
-        <p className="mt-1 text-grass">
-          Countries ranked by chants, then prediction points, then fan count.
-          Updates live all tournament.
-        </p>
-      </header>
+      <PageHeader
+        kicker="World table"
+        title="Loudest fanbases on the planet"
+        sub="Countries ranked by chants, then prediction points, then fan count. Updates live all tournament."
+      />
 
       <StartBanner
         connected={connected}
@@ -83,7 +79,7 @@ export default function LeaderboardPage() {
                 className={`grid grid-cols-[3rem_1fr_4.5rem_4.5rem] items-center gap-2 overflow-hidden border-b border-edge/60 px-4 py-3 transition-colors last:border-0 sm:grid-cols-[3.5rem_1fr_5rem_5rem_5rem] ${
                   mine ? "bg-gold/[0.06]" : "hover:bg-chalk/[0.03]"
                 }`}
-                style={mine ? { boxShadow: "inset 3px 0 0 #1A6E8E" } : undefined}
+                style={mine ? { boxShadow: "inset 3px 0 0 #7FA0AE" } : undefined}
               >
                 <span
                   className={`score-slant -my-1 font-display tabular-nums leading-none ${

@@ -9,6 +9,7 @@ import { ChantCard } from "@/components/chant-card";
 import { ComposeBox } from "@/components/compose-box";
 import { EmptyState } from "@/components/empty-state";
 import { StartBanner } from "@/components/start-banner";
+import { PageHeader } from "@/components/page-header";
 
 export default function ChantsPage() {
   const chants = useChants();
@@ -27,15 +28,11 @@ export default function ChantsPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <header>
-        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
-          The Chant Wall
-        </h1>
-        <p className="mt-1 text-grass">
-          Shout for your team. Every chant is saved forever. Nobody can edit
-          it, nobody can delete it.
-        </p>
-      </header>
+      <PageHeader
+        kicker="The wall"
+        title="The Chant Wall"
+        sub="Shout for your team. Every chant is saved forever. Nobody can edit it, nobody can delete it."
+      />
 
       <StartBanner
         connected={connected}

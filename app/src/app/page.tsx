@@ -62,25 +62,9 @@ export default function Home() {
 
   return (
     <div className="space-y-16">
-      {connected && !loading && fan && myTeam && (
-        <div className="panel flex flex-wrap items-center gap-3 px-5 py-3 text-sm">
-          <span className="text-xl">{myTeam.flag}</span>
-          <span className="min-w-0 flex-1 truncate text-grass">
-            Welcome back. You&apos;re backing{" "}
-            <span className="font-semibold text-chalk">{myTeam.name}</span>.
-          </span>
-          <Link href="/card" className="font-semibold text-gold hover:underline">
-            My card →
-          </Link>
-          <Link href="/matches" className="font-semibold text-gold hover:underline">
-            Today&apos;s matches →
-          </Link>
-        </div>
-      )}
-
       <section className="relative left-1/2 -mt-24 w-screen -translate-x-1/2 overflow-hidden">
         {/* spotlight glow behind the ball, like a piece under gallery light */}
-        <div className="absolute inset-0 bg-[radial-gradient(1000px_600px_at_50%_22%,#46555f,#212a31_72%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(1000px_600px_at_50%_22%,#3a4145,#15181a_72%)]" />
         {imgOk && (
           <Image
             src="/hero-crack.png"
@@ -88,22 +72,38 @@ export default function Home() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-90"
+            className="object-cover"
             onError={() => setImgOk(false)}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-night/60 via-night/10 to-night" />
+        <div className="absolute inset-0 bg-gradient-to-b from-night/40 via-night/10 to-night" />
+        {/* scrim so the headline never fights the bright glass shatter */}
+        <div className="absolute inset-0 bg-[radial-gradient(700px_420px_at_50%_50%,rgba(21,24,26,0.45),transparent_70%)]" />
+        {/* darkened band so the nav always reads at the top */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-night/70 to-transparent" />
+
+        {connected && !loading && fan && myTeam && (
+          <div className="absolute right-4 top-20 z-10 hidden items-center gap-2.5 rounded-full border border-edge-soft bg-night/60 px-4 py-2 text-sm backdrop-blur-md sm:flex">
+            <span>{myTeam.flag}</span>
+            <span className="text-grass">
+              Backing <span className="font-semibold text-chalk">{myTeam.name}</span>
+            </span>
+            <Link href="/card" className="font-semibold text-gold hover:underline">
+              My card →
+            </Link>
+          </div>
+        )}
 
         <div className="relative mx-auto flex min-h-[100svh] max-w-5xl flex-col items-center justify-center px-6 py-28 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.4em] text-chalk/90">
-            World Cup 2026
+          <p className="text-xs font-bold uppercase tracking-[0.4em] text-chalk">
+            12th Man · World Cup 2026
           </p>
           <h1 className="metal-text mt-5 font-display text-6xl uppercase leading-[0.92] tracking-tight sm:text-8xl">
             Pick your nation.
             <br />
             Own the match.
           </h1>
-          <p className="mt-6 max-w-xl text-sm text-chalk/90 sm:text-base">
+          <p className="mt-6 max-w-xl text-sm font-medium text-chalk sm:text-base">
             Cheer with fans worldwide and call the scores before kickoff. Every
             cheer and call is saved forever, so your bragging rights are
             provable.
@@ -111,7 +111,7 @@ export default function Home() {
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <Link
               href="/card"
-              className="rounded-full bg-pitch px-8 py-3.5 font-semibold text-chalk shadow-[0_12px_40px_rgba(18,78,102,0.45)] transition hover:bg-pitch-2"
+              className="rounded-full bg-pitch px-8 py-3.5 font-semibold text-night shadow-[0_12px_40px_rgba(18,78,102,0.45)] transition hover:bg-pitch-2"
             >
               Get your Fan Card
             </Link>
@@ -168,7 +168,7 @@ export default function Home() {
               <div key={s.title} className="panel flex items-start gap-3.5 p-5">
                 <span
                   className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-display text-base ${
-                    done ? "bg-pitch text-chalk" : "bg-chalk/10 text-chalk"
+                    done ? "bg-pitch text-night" : "bg-chalk/10 text-chalk"
                   }`}
                 >
                   {done ? "✓" : i + 1}
@@ -267,7 +267,7 @@ export default function Home() {
         <div className="relative mt-7 flex flex-wrap justify-center gap-3">
           <Link
             href="/card"
-            className="rounded-full bg-pitch px-7 py-3 font-semibold text-chalk transition hover:bg-pitch-2"
+            className="rounded-full bg-pitch px-7 py-3 font-semibold text-night transition hover:bg-pitch-2"
           >
             Get your Fan Card
           </Link>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { PageHeader } from "@/components/page-header";
 
 const accounts = [
   {
@@ -81,15 +82,11 @@ function Step({ n, title, children }: { n: number; title: string; children: Reac
 export default function DemoPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-5">
-      <header>
-        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
-          Take it for a spin
-        </h1>
-        <p className="mt-1 text-grass">
-          Two minutes, play money, no signup. Here&apos;s the fastest way to try
-          everything.
-        </p>
-      </header>
+      <PageHeader
+        kicker="Two minutes"
+        title="Take it for a spin"
+        sub="Two minutes, play money, no signup. Here's the fastest way to try everything."
+      />
 
       <Step n={1} title="What you need">
         <p>

@@ -6,20 +6,18 @@ import { FanCardView, shareOnXUrl } from "@/components/fan-card-view";
 import { RegisterPanel } from "@/components/register-panel";
 import { EmptyState } from "@/components/empty-state";
 import { WalletButton } from "@/components/wallet-button";
+import { PageHeader } from "@/components/page-header";
 
 export default function CardPage() {
   const { fan, loading, connected, refresh } = useFanCard();
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
-      <header>
-        <h1 className="font-display text-4xl uppercase leading-none tracking-tight sm:text-5xl">
-          Your Fan Card
-        </h1>
-        <p className="mt-1 text-grass">
-          One team. One card. Yours for the whole tournament.
-        </p>
-      </header>
+      <PageHeader
+        kicker="Your badge"
+        title="Your Fan Card"
+        sub="One team. One card. Yours for the whole tournament."
+      />
 
       {!connected ? (
         <EmptyState
@@ -43,7 +41,7 @@ export default function CardPage() {
               href={shareOnXUrl(fan)}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-chalk transition hover:bg-pitch-2"
+              className="rounded-full bg-pitch px-6 py-2.5 text-sm font-semibold text-night transition hover:bg-pitch-2"
             >
               Share on X
             </a>

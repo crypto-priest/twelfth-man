@@ -10,10 +10,10 @@ body {
   @apply bg-night text-chalk antialiased;
   /* one big soft spotlight, gallery style */
   background-image:
-    radial-gradient(1100px 620px at 50% -14%, rgba(211, 217, 212, 0.1), transparent 62%),
-    radial-gradient(900px 500px at 85% 8%, rgba(18, 78, 102, 0.16), transparent 60%),
-    radial-gradient(1500px 850px at 50% 118%, rgba(18, 78, 102, 0.14), transparent 65%),
-    linear-gradient(180deg, #212a31 0%, #1a2228 100%);
+    radial-gradient(1100px 620px at 50% -14%, rgba(232, 234, 232, 0.09), transparent 62%),
+    radial-gradient(900px 500px at 85% 8%, rgba(127, 160, 174, 0.08), transparent 60%),
+    radial-gradient(1500px 850px at 50% 118%, rgba(127, 160, 174, 0.07), transparent 65%),
+    linear-gradient(180deg, #15181a 0%, #101314 100%);
   background-attachment: fixed;
 }
 
@@ -26,6 +26,19 @@ body::after {
   pointer-events: none;
   opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* the hero's shattered glass, blurred into a quiet backdrop for inner pages */
+.atmo {
+  position: fixed;
+  inset: -70px;
+  z-index: -2;
+  pointer-events: none;
+  background-image: url("/hero-crack.png");
+  background-size: cover;
+  background-position: center 30%;
+  filter: blur(52px) brightness(0.5) saturate(0.75);
+  opacity: 0.14;
 }
 
 /* halfway line + center circle, like looking down at the pitch */
@@ -42,7 +55,7 @@ body::after {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(rgba(211, 217, 212, 0.05), rgba(211, 217, 212, 0.015));
+  background: linear-gradient(rgba(232, 234, 232, 0.05), rgba(232, 234, 232, 0.015));
 }
 .pitch-lines::after {
   content: "";
@@ -52,7 +65,7 @@ body::after {
   width: min(56vw, 640px);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(211, 217, 212, 0.04);
+  border: 1px solid rgba(232, 234, 232, 0.04);
   border-radius: 50%;
 }
 
@@ -60,8 +73,8 @@ body::after {
 .panel {
   @apply rounded-2xl border border-edge-soft backdrop-blur-md;
   background:
-    linear-gradient(180deg, rgba(211, 217, 212, 0.05), rgba(211, 217, 212, 0) 42%),
-    rgba(46, 57, 68, 0.6);
+    linear-gradient(180deg, rgba(232, 234, 232, 0.05), rgba(232, 234, 232, 0) 42%),
+    rgba(35, 40, 43, 0.62);
   box-shadow: 0 28px 56px -32px rgba(0, 0, 0, 0.7);
 }
 
@@ -73,10 +86,11 @@ body::after {
 
 /* metallic gradient fill for display headlines */
 .metal-text {
-  background: linear-gradient(102deg, #d3d9d4 0%, #748d92 42%, #43555c 68%, #d3d9d4 100%);
+  background: linear-gradient(102deg, #ffffff 0%, #e8eae8 38%, #9aa4a4 66%, #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(10, 15, 19, 0.55));
 }
 
 /* broadcast-graphics slant for big scores */
@@ -86,10 +100,10 @@ body::after {
 }
 
 .glow-text {
-  text-shadow: 0 0 26px rgba(211, 217, 212, 0.25);
+  text-shadow: 0 0 26px rgba(232, 234, 232, 0.25);
 }
 .glow-gold {
-  text-shadow: 0 0 26px rgba(130, 180, 205, 0.3);
+  text-shadow: 0 0 26px rgba(159, 190, 203, 0.3);
 }
 
 /* tv-style live bug: red box, blinking dot */
@@ -125,9 +139,9 @@ body::after {
   @apply rounded-lg;
   background: linear-gradient(
     100deg,
-    rgba(211, 217, 212, 0.05) 40%,
-    rgba(211, 217, 212, 0.11) 50%,
-    rgba(211, 217, 212, 0.05) 60%
+    rgba(232, 234, 232, 0.05) 40%,
+    rgba(232, 234, 232, 0.11) 50%,
+    rgba(232, 234, 232, 0.05) 60%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s linear infinite;
@@ -135,18 +149,20 @@ body::after {
 
 /* wallet-adapter modal + button, reskinned for the gallery dark */
 .wallet-adapter-button-trigger {
-  @apply !h-10 !rounded-full !bg-pitch !px-5 !font-sans !text-sm !font-semibold !text-chalk;
+  @apply !h-10 !rounded-full !px-5 !font-sans !text-sm !font-semibold;
+  background: #7fa0ae !important;
+  color: #15181a !important;
 }
 .wallet-adapter-button-trigger:not([disabled]):hover {
-  @apply !bg-pitch-2;
+  background: #93b4c2 !important;
 }
 .wallet-adapter-dropdown-list,
 .wallet-adapter-modal-wrapper {
   @apply !bg-panel !text-chalk;
-  border: 1px solid #46555f;
+  border: 1px solid #3a4145;
 }
 .wallet-adapter-modal-overlay {
-  background: rgba(10, 15, 19, 0.75);
+  background: rgba(8, 10, 11, 0.78);
 }
 .wallet-adapter-modal-button-close {
   @apply !bg-panel-2;
@@ -156,14 +172,14 @@ body::after {
 }
 
 ::selection {
-  background: rgba(26, 110, 142, 0.45);
+  background: rgba(127, 160, 174, 0.4);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #46555f;
+  background: #3a4145;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-track {
