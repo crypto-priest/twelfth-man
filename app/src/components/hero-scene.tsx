@@ -1,8 +1,30 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { Component, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+
+// if the gpu says no, the hero just keeps its gradient backdrop
+class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
+// probe before mounting the renderer: browsers with hardware acceleration
+// off would otherwise throw from the WebGLRenderer constructor
+function webglAvailable() {
+  try {
+    const probe = document.createElement("canvas");
+    return Boolean(probe.getContext("webgl2") || probe.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
 
 function Ball() {
   const group = useRef<THREE.Group>(null);
@@ -124,20 +146,30 @@ function Floodlight({ position, target }: { position: [number, number, number]; 
 }
 
 export default function HeroScene() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(webglAvailable());
+  }, []);
+
+  if (!ready) return null;
+
   return (
-    <Canvas
-      camera={{ position: [0, 0, 6.2], fov: 42 }}
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: true }}
-      style={{ background: "transparent" }}
-    >
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[4, 6, 3]} intensity={1.6} color="#f0fff8" />
-      <pointLight position={[-5, -2, 2]} intensity={1.2} color="#00ff87" />
-      <Ball />
-      <Crowd />
-      <Floodlight position={[-4.5, 5.5, -1]} target={[0, 0, 0]} />
-      <Floodlight position={[4.5, 5.5, -1]} target={[0, 0, 0]} />
-    </Canvas>
+    <SceneBoundary>
+      <Canvas
+        camera={{ position: [0, 0, 6.2], fov: 42 }}
+        dpr={[1, 1.75]}
+        gl={{ antialias: true, alpha: true, failIfMajorPerformanceCaveat: false }}
+        style={{ background: "transparent" }}
+      >
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[4, 6, 3]} intensity={1.6} color="#f0fff8" />
+        <pointLight position={[-5, -2, 2]} intensity={1.2} color="#00ff87" />
+        <Ball />
+        <Crowd />
+        <Floodlight position={[-4.5, 5.5, -1]} target={[0, 0, 0]} />
+        <Floodlight position={[4.5, 5.5, -1]} target={[0, 0, 0]} />
+      </Canvas>
+    </SceneBoundary>
   );
 }

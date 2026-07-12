@@ -125,7 +125,14 @@ export default function Home() {
   useEffect(() => {
     const wide = window.matchMedia("(min-width: 768px)").matches;
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setFx(wide && !calm);
+    let gl = false;
+    try {
+      const probe = document.createElement("canvas");
+      gl = !!(probe.getContext("webgl2") || probe.getContext("webgl"));
+    } catch {
+      gl = false;
+    }
+    setFx(wide && !calm && gl);
   }, []);
 
   const fixtures = (matches ?? []).filter((m) => !m.settled).slice(0, 3);
