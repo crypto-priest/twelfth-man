@@ -3,18 +3,14 @@
 import { useEffect, useState } from "react";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
-import {
-  PROGRAM_ID,
-  fetchAllChants,
-  parseChantEvents,
-  type Chant,
-} from "@/lib/fanpulse";
+import { PROGRAM_ID, parseChantEvents, type Chant } from "@/lib/fanpulse";
+import { fetchFeed } from "@/lib/chain-feed";
 
 export type FeedChant = Chant & { live?: boolean };
 
-// Polls the chant accounts and layers onLogs events on top so new chants
-// land in the feed the moment they confirm.
-export function useChants(intervalMs = 8000) {
+// Polls the cached server snapshot and layers onLogs events on top so new
+// chants still land in the feed the moment they confirm.
+export function useChants(intervalMs = 30000) {
   const { connection } = useConnection();
   const [chants, setChants] = useState<FeedChant[] | null>(null);
 
@@ -23,10 +19,10 @@ export function useChants(intervalMs = 8000) {
 
     const load = async () => {
       try {
-        const fetched = await fetchAllChants(connection);
-        if (alive) setChants(fetched);
+        const feed = await fetchFeed();
+        if (alive) setChants(feed.chants);
       } catch {
-        // keep whatever we have; rpc hiccups shouldn't blank the feed
+        // keep whatever we have; hiccups shouldn't blank the feed
       }
     };
 

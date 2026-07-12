@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/about" className="text-muted hover:text-chalk">
                   About
                 </Link>
-                <Link href="/demo" className="text-muted hover:text-chalk">
+                <Link href="/about#try-it" className="text-muted hover:text-chalk">
                   Try it
                 </Link>
               </p>

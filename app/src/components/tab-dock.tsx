@@ -29,10 +29,13 @@ const tabs = [
     ),
   },
   {
-    href: "/leaderboard",
-    label: "Ranks",
+    href: "/about",
+    label: "About",
     icon: (
-      <path d="M7 4h10v3a5 5 0 0 1-10 0V4ZM7 5H4v1a3.5 3.5 0 0 0 3 3.5M17 5h3v1a3.5 3.5 0 0 1-3 3.5M12 12v4m-3.5 4h7m-5.5 0v-4h4v4" strokeLinecap="round" strokeLinejoin="round" />
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 11v5M12 7.8v.4" strokeLinecap="round" />
+      </>
     ),
   },
   {

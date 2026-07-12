@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useConnection } from "@solana/wallet-adapter-react";
-import { fetchAllTeamStats, type TeamStats } from "@/lib/fanpulse";
+import type { TeamStats } from "@/lib/fanpulse";
+import { fetchFeed } from "@/lib/chain-feed";
 
 // Ranked loudest-first: chants, then points, then headcount.
 export function rankTeams(stats: TeamStats[]): TeamStats[] {
@@ -15,15 +15,14 @@ export function rankTeams(stats: TeamStats[]): TeamStats[] {
 }
 
 export function useTeamStats(intervalMs = 30000) {
-  const { connection } = useConnection();
   const [stats, setStats] = useState<TeamStats[] | null>(null);
 
   useEffect(() => {
     let alive = true;
     const load = async () => {
       try {
-        const fetched = await fetchAllTeamStats(connection);
-        if (alive) setStats(rankTeams(fetched));
+        const feed = await fetchFeed();
+        if (alive) setStats(rankTeams(feed.teams));
       } catch {}
     };
     load();
@@ -32,7 +31,7 @@ export function useTeamStats(intervalMs = 30000) {
       alive = false;
       clearInterval(timer);
     };
-  }, [connection, intervalMs]);
+  }, [intervalMs]);
 
   return stats;
 }

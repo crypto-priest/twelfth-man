@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useFanCard } from "@/hooks/use-fan-card";
 import { FanCardView, shareOnXUrl } from "@/components/fan-card-view";
+import { FanbaseBoard } from "@/components/fanbase-board";
 import { RegisterPanel } from "@/components/register-panel";
 import { EmptyState } from "@/components/empty-state";
+import { SectionTitle } from "@/components/section-title";
 import { WalletButton } from "@/components/wallet-button";
 import { PageHeader } from "@/components/page-header";
 
@@ -62,6 +64,17 @@ export default function CardPage() {
       ) : (
         <RegisterPanel onRegistered={refresh} />
       )}
+
+      <section id="leaderboard" className="scroll-mt-24 space-y-4 pt-6">
+        <SectionTitle kicker="World table">
+          Loudest fanbases on the planet
+        </SectionTitle>
+        <p className="-mt-2 text-sm text-grass">
+          Countries ranked by chants, then prediction points, then fan count.
+          Updates live all tournament.
+        </p>
+        <FanbaseBoard myTeam={fan?.team} />
+      </section>
     </div>
   );
 }
