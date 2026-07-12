@@ -20,8 +20,8 @@ pub mod twelfth_man {
         Ok(())
     }
 
-    /// Mint your on-chain Fan Card for a team. One card per wallet — passion
-    /// means commitment.
+    /// Mint your on-chain Fan Card for a team. One card per wallet, because
+    /// passion means commitment.
     pub fn register_fan(ctx: Context<RegisterFan>, team_code: String) -> Result<()> {
         let code = validate_team_code(&team_code)?;
 
@@ -114,7 +114,7 @@ pub mod twelfth_man {
         Ok(())
     }
 
-    /// Lock in your score prediction before kickoff. Immutable — that's the
+    /// Lock in your score prediction before kickoff. Immutable, and that's the
     /// point: bragging rights you can prove.
     pub fn predict(ctx: Context<Predict>, home_score: u8, away_score: u8) -> Result<()> {
         let m = &ctx.accounts.match_account;
@@ -391,7 +391,7 @@ pub enum FanPulseError {
     ChantTooLong,
     #[msg("Match id must be greater than 0")]
     InvalidMatchId,
-    #[msg("Kickoff has passed — predictions are closed")]
+    #[msg("Kickoff has passed, predictions are closed")]
     PredictionClosed,
     #[msg("Result already posted for this match")]
     MatchAlreadySettled,
