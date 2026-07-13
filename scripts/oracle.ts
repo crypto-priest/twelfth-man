@@ -13,29 +13,49 @@ import { TwelfthMan } from "../target/types/twelfth_man";
 
 const SCOREBOARD =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
-const POLL_MS = 150_000;
+const POLL_MS = 300_000;
+
+function recentDates(): string[] {
+  const days = [];
+  for (const back of [1, 0]) {
+    const d = new Date(Date.now() - back * 86_400_000);
+    days.push(d.toISOString().slice(0, 10).replace(/-/g, ""));
+  }
+  return days;
+}
 
 type Final = { homeScore: number; awayScore: number };
 
 const pendingConfirm = new Map<string, Final>();
 
 async function fetchFinals(): Promise<Map<string, Final & { completed: boolean }>> {
-  const res = await fetch(SCOREBOARD);
-  if (!res.ok) throw new Error(`scoreboard ${res.status}`);
-  const data = (await res.json()) as any;
   const out = new Map();
-  for (const e of data.events ?? []) {
-    const comp = e.competitions?.[0];
-    const side = (ha: string) =>
-      comp?.competitors?.find((c: any) => c.homeAway === ha);
-    const home = side("home");
-    const away = side("away");
-    if (!home?.team?.abbreviation || !away?.team?.abbreviation) continue;
-    out.set(`${home.team.abbreviation}-${away.team.abbreviation}`, {
-      homeScore: Number(home.score ?? 0),
-      awayScore: Number(away.score ?? 0),
-      completed: Boolean(comp?.status?.type?.completed),
-    });
+  // yesterday + today, so a result can't rotate off the default view before
+  // we see it; keyed in both orientations since ESPN's home/away designation
+  // can differ from ours
+  for (const day of recentDates()) {
+    const res = await fetch(`${SCOREBOARD}?dates=${day}`);
+    if (!res.ok) continue;
+    const data = (await res.json()) as any;
+    for (const e of data.events ?? []) {
+      const comp = e.competitions?.[0];
+      const side = (ha: string) =>
+        comp?.competitors?.find((c: any) => c.homeAway === ha);
+      const home = side("home");
+      const away = side("away");
+      if (!home?.team?.abbreviation || !away?.team?.abbreviation) continue;
+      const entry = {
+        homeScore: Number(home.score ?? 0),
+        awayScore: Number(away.score ?? 0),
+        completed: Boolean(comp?.status?.type?.completed),
+      };
+      out.set(`${home.team.abbreviation}-${away.team.abbreviation}`, entry);
+      out.set(`${away.team.abbreviation}-${home.team.abbreviation}`, {
+        ...entry,
+        homeScore: entry.awayScore,
+        awayScore: entry.homeScore,
+      });
+    }
   }
   return out;
 }
