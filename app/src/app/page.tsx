@@ -86,9 +86,9 @@ export default function Home() {
             onError={() => setImgOk(false)}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-night/40 via-night/10 to-night" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(21,24,26,0.45),rgba(21,24,26,0.06)_38%,rgba(21,24,26,0.12)_70%,#15181a_98%)]" />
         {/* scrim so the headline never fights the bright glass shatter */}
-        <div className="absolute inset-0 bg-[radial-gradient(700px_420px_at_50%_50%,rgba(21,24,26,0.45),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(700px_420px_at_50%_46%,rgba(21,24,26,0.32),transparent_72%)]" />
         {/* darkened band so the nav always reads at the top */}
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-night/70 to-transparent" />
 
