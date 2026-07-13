@@ -109,7 +109,7 @@ export default function Home() {
           <p className="text-xs font-bold uppercase tracking-[0.4em] text-chalk">
             12th Man · World Cup 2026
           </p>
-          <h1 className="metal-text mt-5 font-display text-5xl uppercase leading-[0.94] tracking-tight sm:text-7xl">
+          <h1 className="metal-text-hero mt-5 font-display text-5xl uppercase leading-[0.94] tracking-tight sm:text-7xl">
             Every team has eleven.
             <br />
             Be the twelfth.
