@@ -81,6 +81,7 @@ export default function Home() {
             alt="A football smashing through cracked glass"
             fill
             priority
+            unoptimized
             sizes="100vw"
             className="object-cover"
             onError={() => setImgOk(false)}
