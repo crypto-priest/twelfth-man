@@ -11,8 +11,8 @@ fanbase on the planet.
 Everything lives in a single Anchor program on Solana devnet. No database,
 no backend. Chants cost a fraction of a cent, which is the whole reason this
 works: cheering on-chain is only sane on a chain where a transaction costs
-less than a sticker. The frontend is a Next.js app with a light silver-glass
-look, frosted panels on a bright matchday background.
+less than a sticker. The frontend is a Next.js app with a dark graphite, gallery-inspired
+look built around a football-through-glass hero shot.
 
 ## Program
 
