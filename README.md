@@ -92,9 +92,15 @@ The app also has this guide built in, at `/demo`.
    arrow kitten raise clip script capital sorry foot vendor twist oxygen rally
    ```
 
+   Test account C, alternate (`ChGYXBZhH3foXEgFFnZrYbjHtoknoBK9h4q6JKouRvGt`):
+
+   ```
+   drama draw law develop current unit found coral laptop clump leave right
+   ```
+
    One team per account, forever. If the account already has a Fan Card,
-   that step is done; everything else still works. There are two accounts so
-   a second tester can pick a rival team.
+   that step is done; everything else still works. There are several accounts
+   so another tester can pick a rival team.
 
    Or use your own wallet: switch it to devnet and grab free practice SOL
    from [faucet.solana.com](https://faucet.solana.com).

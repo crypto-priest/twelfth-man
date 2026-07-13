@@ -64,6 +64,12 @@ const accounts = [
       "arrow kitten raise clip script capital sorry foot vendor twist oxygen rally",
     address: "CKz9PsKMGSQMRLvAaPewXeeddes7Wk2QgRGpbQxSE3Ys",
   },
+  {
+    label: "Test account C (alternate)",
+    phrase:
+      "drama draw law develop current unit found coral laptop clump leave right",
+    address: "ChGYXBZhH3foXEgFFnZrYbjHtoknoBK9h4q6JKouRvGt",
+  },
 ];
 
 const script = [
